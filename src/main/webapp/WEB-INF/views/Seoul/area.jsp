@@ -29,12 +29,14 @@
 		        <c:forEach var="item" items="${sigunguInfo.tourData}">
 		          	 <c:if test="${not empty item.firstimage}">
 			            <li class="article-item">
-			                <div class="image-box">
-	                            <img src="${item.firstimage}" alt="${item.title}">
-			                </div>
-			                <div class="text-box">
-			                    <h3>${item.title}</h3>
-			                    <p>${item.addr1}</p>
+			            	<div class="items">
+				                <div class="image-box">
+		                            <img src="${item.firstimage}" alt="${item.title}">
+				                </div>
+				                <div class="text-box">
+				                    <h3>${item.title}</h3>
+				                    <p>${item.addr1}</p>
+				                </div>
 			                </div>
 			            </li>
 		           	</c:if>
@@ -54,10 +56,11 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: 'GET',
-			url: `/Seoul/area/${selectedSigungu}`
+			url: `/Seoul/area/`+selectedSigungu,
+			dataType: 'html',
 			success: function(response){
-				$('.article-item').hide();
-				$('.article-item[data-sigungu=]"' + selectedSigungu + '"]').show();
+				console.log(response);
+				
 			},
 			error: function(xhr, status, error){
 				console.error(error);

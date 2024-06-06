@@ -48,19 +48,19 @@ public class SeoulTourService {
 		JsonNode items = root.path("response").path("body").path("items").path("item");
 
 		
-		List<Map<String, Object>> filteredCigungu = new ArrayList<>();
+		List<Map<String, Object>> filteredSigungu = new ArrayList<>();
 		if(items.isArray()) {
 			for(JsonNode item : items) {
 				if(item.has("code") && item.has("name")) {
-					Map<String, Object> cigunguMap = new HashMap<>();
-					cigunguMap.put("code", item.get("code").asText());
-					cigunguMap.put("name", item.get("name").asText());
-					filteredCigungu.add(cigunguMap);
+					Map<String, Object> sigunguMap = new HashMap<>();
+					sigunguMap.put("code", item.get("code").asText());
+					sigunguMap.put("name", item.get("name").asText());
+					filteredSigungu.add(sigunguMap);
 				}
 			}
 		}
 
-		return filteredCigungu;
+		return filteredSigungu;
 		
 	}
 	
@@ -110,7 +110,7 @@ public class SeoulTourService {
 			}
 		}
 	}
-//	System.out.println(filteredItems);
+
 	
 	return filteredItems;
 	//Map<String, Object> map = new ObjectMapper().readValue(response.toString(), Map.class);

@@ -24,7 +24,8 @@ public class SeoulTourController {
 	
 	@GetMapping("/Seoul/area/{sigunguCode}")
 	public String getTourDataBySigungu(@PathVariable int sigunguCode, Model model)
-										throws URISyntaxException, JsonProcessingException{
+										throws URISyntaxException, JsonProcessingException{		
+		System.out.println(sigunguCode);
 		// 해당 지역 코드를 기반으로 해당 지역의 관광 정보 조회
 		List<Map<String, Object>> tourData = stService.getAreaData(1, "서울", 12, 1000, 1, sigunguCode);
 		
