@@ -42,12 +42,11 @@ public class SeoulTourService {
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		String response = restTemplate.getForObject(uri, String.class);
-//		System.out.println("Response: " + response);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode root = objectMapper.readTree(response);
 		JsonNode items = root.path("response").path("body").path("items").path("item");
-//		System.out.println("items: " + items);
+
 		
 		List<Map<String, Object>> filteredCigungu = new ArrayList<>();
 		if(items.isArray()) {
@@ -60,7 +59,7 @@ public class SeoulTourService {
 				}
 			}
 		}
-//		System.out.println(filteredCigungu);
+
 		return filteredCigungu;
 		
 	}
@@ -90,8 +89,7 @@ public class SeoulTourService {
 		    "&serviceKey=" + serviceKey;
 		
 		URI uri = new URI(url);
-//		System.out.println(uri);
-	//	
+
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
