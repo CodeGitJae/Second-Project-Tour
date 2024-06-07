@@ -17,14 +17,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class SeoulTourService {
+	
+	private final String servicekey = "G34t4KEv8WaZXw02DVg%2BQLWymgFJ%2Fxrh%2BTJZM6Cz8kZse6qoFWUcAMQqL1xfiRmCeVinKefaKFLENM1naTfzgg%3D%3D";
 
+	
 	//지역 코드 API 데이터 받아오기
 	public List<Map<String, Object>> getAreaCode(int numOfRows, int pageNo, int areaCode) throws URISyntaxException, JsonProcessingException{
 		String link = "https://apis.data.go.kr/B551011/KorService1/areaCode1";
 		String MobileOS = "ETC";
 		String MobileApp = "TEST";
 		String _type = "json";
-		String serviceKey = "G34t4KEv8WaZXw02DVg%2BQLWymgFJ%2Fxrh%2BTJZM6Cz8kZse6qoFWUcAMQqL1xfiRmCeVinKefaKFLENM1naTfzgg%3D%3D";
 		
 		String url = link + "?" +
 			"numOfRows=" + numOfRows +
@@ -33,7 +35,7 @@ public class SeoulTourService {
 		    "&MobileApp=" + MobileApp +
 		    "&areaCode=" + areaCode +
 		    "&_type=" + _type + 
-		    "&serviceKey=" + serviceKey;
+		    "&serviceKey=" + servicekey;
 		
 		URI uri = new URI(url);
 		
@@ -69,13 +71,15 @@ public class SeoulTourService {
 				int numOfRows, int pageNo, int sigunguCode) throws URISyntaxException, JsonProcessingException {
 
 
+		System.out.println("////////////////////");
+		System.out.println(sigunguCode);
+		
 		String link = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
 		String MobileOS = "ETC";
 		String MobileApp = "TEST";
 		String _type = "json";
 		//String arrange = "R";
-		String serviceKey = "G34t4KEv8WaZXw02DVg%2BQLWymgFJ%2Fxrh%2BTJZM6Cz8kZse6qoFWUcAMQqL1xfiRmCeVinKefaKFLENM1naTfzgg%3D%3D";
-		
+	
 		String url = link + "?" +
 			"numOfRows=" + numOfRows +
 			"&pageNo=" + pageNo +
@@ -86,16 +90,15 @@ public class SeoulTourService {
 		    "&contentTypeId=" + contentTypeId +
 		    "&areaCode=" + areaCode +
 		    "&sigunguCode=" + sigunguCode +
-		    "&serviceKey=" + serviceKey;
+		    "&serviceKey=" + servicekey;
 		
 		URI uri = new URI(url);
-
+		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		String response = restTemplate.getForObject(uri, String.class);
-		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode root = objectMapper.readTree(response);
 		JsonNode items = root.path("response").path("body").path("items").path("item");

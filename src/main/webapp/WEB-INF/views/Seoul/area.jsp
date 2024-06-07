@@ -19,11 +19,12 @@
  <div class="container" style="height:800px">   
   	  <h1>서울 지역 관광 정보</h1>
    <div class="citys"> 
+   			<button type="button" class="showAllSigunguBtn" data-sigungu="0">서울</button>
     <c:forEach var="sigunguInfo" items="${allTourData}">
     	 	<button type="button" class="sigunguBtn" data-sigungu="${sigunguInfo.sigunguCode}">${sigunguInfo.sigunguName}</button>
     </c:forEach>
    </div> 
-	  <div class="article-list-slide">
+	  <div class="article-list-slide mt-4">
 	    <ul class="article-list">
 		    <c:forEach var="sigunguInfo" items="${allTourData}">
 		        <c:forEach var="item" items="${sigunguInfo.tourData}">
@@ -50,22 +51,33 @@
     
 <%@ include file="../components/footer.jsp" %>
 
-<script src="${pageContext.request.contextPath}/assets/js/aaa.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/filteredItems.js"></script>
 <script>
 $(document).ready(function(){
+	$(".showAllSigunguBtn").click(function(){
+/* 		let showAllSeoul = $(this).data('sigungu'); */
+		
+		$.ajax({
+			type: 'GET',
+			url: '/Seoul/area/seoul',
+			dataType: 'json',
+			success: function(selectedAreaArr){
+				let items = showItemsByGuArr(selectedAreaArr);
+				$(".article-list").html(items);
+			}
+		});
+	});
+		
 	$(".sigunguBtn").click(function(){
 		let selectedSigungu = $(this).data('sigungu');
 		
+	    // 해당 지역 정보를 서버로부터 가져오기
 		$.ajax({
 			type: 'GET',
 			url: `/Seoul/area/`+ selectedSigungu,
 			dataType: 'json',
-			success: function(arr){
-				
-				/* $.get(response.html, function(data, status){
-					$(".article-item").html(data);
-				}); */
-				let items = showItemsByGuArr(arr);
+			success: function(selectedAreaArr){
+				let items = showItemsByGuArr(selectedAreaArr);
 				$(".article-list").html(items);
 				
 			},
