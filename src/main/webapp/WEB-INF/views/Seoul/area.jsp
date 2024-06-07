@@ -49,6 +49,8 @@
 </main>
     
 <%@ include file="../components/footer.jsp" %>
+
+<script src="${pageContext.request.contextPath}/assets/js/aaa.js"></script>
 <script>
 $(document).ready(function(){
 	$(".sigunguBtn").click(function(){
@@ -56,10 +58,15 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: 'GET',
-			url: `/Seoul/area/`+selectedSigungu,
-			dataType: 'html',
-			success: function(response){
-				console.log(response);
+			url: `/Seoul/area/`+ selectedSigungu,
+			dataType: 'json',
+			success: function(arr){
+				
+				/* $.get(response.html, function(data, status){
+					$(".article-item").html(data);
+				}); */
+				let items = showItemsByGuArr(arr);
+				$(".article-list").html(items);
 				
 			},
 			error: function(xhr, status, error){

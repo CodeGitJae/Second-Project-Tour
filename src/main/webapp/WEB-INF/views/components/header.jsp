@@ -45,6 +45,8 @@
   <script src="${pageContext.request.contextPath}/assets/js/weather.js"></script>
   <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
   <link href="${pageContext.request.contextPath}/assets/css/areaStyle.css" rel="stylesheet" type="text/css">
+  
+
 
   <!-- =======================================================
   * Template Name: Moderna

@@ -25,7 +25,7 @@ public class SeoulTourService {
 		String MobileApp = "TEST";
 		String _type = "json";
 		String serviceKey = "G34t4KEv8WaZXw02DVg%2BQLWymgFJ%2Fxrh%2BTJZM6Cz8kZse6qoFWUcAMQqL1xfiRmCeVinKefaKFLENM1naTfzgg%3D%3D";
-	
+		
 		String url = link + "?" +
 			"numOfRows=" + numOfRows +
 			"&pageNo=" + pageNo +
@@ -95,7 +95,6 @@ public class SeoulTourService {
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		String response = restTemplate.getForObject(uri, String.class);
-		
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode root = objectMapper.readTree(response);

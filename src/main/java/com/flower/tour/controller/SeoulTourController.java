@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.flower.tour.service.SeoulTourService;
@@ -22,17 +24,17 @@ public class SeoulTourController {
 	private SeoulTourService stService;
 	
 	
-	@GetMapping("/Seoul/area/{sigunguCode}")
-	public String getTourDataBySigungu(@PathVariable int sigunguCode, Model model)
+	@GetMapping("/Seoul/area/{selectedSigungu}")
+	@ResponseBody
+	public List<Map<String, Object>> getTourDataBySigungu(@PathVariable("selectedSigungu") int sigunguCode, Model model)
 										throws URISyntaxException, JsonProcessingException{		
 		System.out.println(sigunguCode);
 		// 해당 지역 코드를 기반으로 해당 지역의 관광 정보 조회
 		List<Map<String, Object>> tourData = stService.getAreaData(1, "서울", 12, 1000, 1, sigunguCode);
 		
 		// 조회된 관광 정보를 모델에 담아서 jsp 페이지로 전달
-		model.addAttribute("allTourData", tourData);
 		
-		return "Seoul/area";
+		return tourData; 
 	}
 
     @GetMapping("/Seoul/area")
