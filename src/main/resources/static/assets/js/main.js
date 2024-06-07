@@ -245,4 +245,20 @@
   }
   window.addEventListener('load', initClientsSwiper);
 
+  /**
+   * nav menu active
+   */
+  const navMenus = document.querySelectorAll('#navbar a');
+  const uri = window.location.pathname;
+  
+  navMenus.forEach((menu) => {
+    if(uri === menu.getAttribute('href')) {
+      menu.classList.add('active');
+      menu.classList.add('fw-bolder');
+    } else {
+      menu.classList.remove('active');
+      menu.classList.remove('fw-bolder');
+    }
+  })
+
 })()

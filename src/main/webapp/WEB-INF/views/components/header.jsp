@@ -17,7 +17,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="${pageContext.request.contextPath}/assets/img/favicon.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
@@ -32,7 +32,7 @@
   <link href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
   
   <%
     WebApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
@@ -72,7 +72,7 @@
           <li><a href="">여행지</a></li>
           <li><a href="">맛집</a></li>
           <li><a href="">축제</a></li>
-          <li><a href="">여행정보</a></li>
+          <li><a href="/info/traffic">여행정보</a></li>
         </ul>
       </nav><!-- .navbar -->
       
