@@ -1,5 +1,3 @@
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -88,18 +86,6 @@
 
   <!-- Template Main JS File -->
   <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-  
-  <%
-      WebApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
-      String weatherApikey = (String) context.getBean("weatherApikey");
-  %>
-  <!-- open weather js -->
-  <script type="text/javascript">
-    const weatherApikey = '<%= weatherApikey %>';
-    console.log("=========================");
-    console.log(weatherApikey);
-  </script>
-  <script src="${pageContext.request.contextPath}/assets/js/weather.js"></script>
 
 </body>
 

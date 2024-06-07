@@ -1,3 +1,5 @@
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -31,6 +33,16 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <%
+    WebApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
+    String weatherApikey = (String) context.getBean("weatherApikey");
+  %>
+  <!-- open weather js -->
+  <script type="text/javascript">
+    const weatherApikey = '<%= weatherApikey %>';
+  </script>
+  <script src="${pageContext.request.contextPath}/assets/js/weather.js"></script>
 
   <!-- =======================================================
   * Template Name: Moderna

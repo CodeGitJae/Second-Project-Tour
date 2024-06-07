@@ -1,5 +1,7 @@
 package com.flower.tour.service;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,7 @@ public class MainService {
 	@Value("${apikey.tour}")
     private String tourApikey;
 	
-	public void getLocationBasedList(String lat, String lon) {
+	public List<Map<String, Object>> getLocationBasedList(String lat, String lon) throws URISyntaxException {
 		
 		String url = "https://apis.data.go.kr/B551011/KorService1/locationBasedList1";
 		String mapX = lon;
@@ -26,34 +28,39 @@ public class MainService {
 		String radius = "10000";
 		String row = "10";
 		
-		url = "http://apis.data.go.kr/B551011/KorService1/locationBasedList1?serviceKey=" + tourApikey + 
-				"numOfRows=" + row + 
+		url = url + "?serviceKey=" + tourApikey + 
+				"&numOfRows=" + row + 
 				"&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=S&mapX=" + mapX + 
 				"&mapY=" + mapY + 
-				"&radius=" + radius + "&listYN=Y&_type=json";
+				"&radius=" + radius + "&listYN=Y&_type=json&contentTypeId=12";
 		
 		System.out.println(url);
 		
+		URI uri = new URI(url);
+		
 		// RestTemplate 사용
         RestTemplate restTemplate = new RestTemplate();
-        String response = restTemplate.getForObject(url, String.class);
+        String response = restTemplate.getForObject(uri, String.class);
 
         // 응답을 출력
         System.out.println("Response: " + response);
         
         List<Map<String, Object>> result = parseLocationBasedList(response);
+
+        // 객체 잘 매핑된지 확인용 출력문
+//        for (Map<String, Object> item : result) {
+//            System.out.println("title: " + item.get("title"));
+//            System.out.println("addr1: " + item.get("addr1"));
+//            System.out.println("addr2: " + item.get("addr2"));
+//            System.out.println("tel: " + item.get("tel"));
+//            System.out.println("dist: " + item.get("dist"));
+//            System.out.println("firstimage: " + item.get("firstimage"));
+//            System.out.println("cat3: " + item.get("cat3"));
+//            System.out.println("----------------------");
+//        }
         
-        for (Map<String, Object> item : result) {
-            System.out.println("title: " + item.get("title"));
-            System.out.println("addr1: " + item.get("addr1"));
-            System.out.println("addr2: " + item.get("addr2"));
-            System.out.println("tel: " + item.get("tel"));
-            System.out.println("dist: " + item.get("dist"));
-            System.out.println("firstimage: " + item.get("firstimage"));
-            System.out.println("cat3: " + item.get("cat3"));
-            System.out.println("----------------------");
-        }
-        
+        // 결과 10개 중 5개만 리턴
+        return result.subList(0, 5);
 	}
 	
 	private List<Map<String, Object>> parseLocationBasedList(String response) {
