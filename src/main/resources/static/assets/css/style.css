@@ -336,36 +336,9 @@ h6,
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 90vh;
+  height: 35%;
   overflow: hidden;
   position: relative;
-}
-
-#hero::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 130%;
-  height: 95%;
-  background: linear-gradient(to right, rgba(30, 67, 86, 0.8), rgba(30, 67, 86, 0.6)), url("../img/hero-bg.jpg") center top no-repeat;
-  z-index: 0;
-  border-radius: 0 0 50% 50%;
-  transform: translateX(-50%) rotate(0deg);
-}
-
-#hero::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 130%;
-  height: 96%;
-  background: #68A4C4;
-  opacity: 0.3;
-  z-index: 0;
-  border-radius: 0 0 50% 50%;
-  transform: translateX(-50%) translateY(18px) rotate(2deg);
 }
 
 #hero .carousel-container {
@@ -482,6 +455,9 @@ h6,
   }
 }
 
+#heroCarousel {
+  height: 100%;
+}
 /*--------------------------------------------------------------
 # Hero No Slider Section
 --------------------------------------------------------------*/
@@ -542,11 +518,15 @@ h6,
   }
 }
 
+.carousel-container img {
+  filter: brightness(50%);
+}
+
 /*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
+  padding: 0 0 80px 0;
 }
 
 .section-bg {
@@ -2337,4 +2317,8 @@ section {
 
 #footer .credits a {
   color: #a2cce3;
+}
+
+.weather {
+  color: white;
 }

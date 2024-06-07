@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### api key ###
+application-apikey.yml
+
 ### STS ###
 .apt_generated
 .classpath

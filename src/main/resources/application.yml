@@ -12,6 +12,6 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
-      
-api:
-  serviceKey: TI1oFdCS1SPKKvp9WcBKVs8y7gKPOoRQKZDXzGfDsPsRXl9oleYMNRi+SU2am5ee+A02b3iUX2qKzGoec7xNAQ==
+
+  profiles:
+    include: apikey
