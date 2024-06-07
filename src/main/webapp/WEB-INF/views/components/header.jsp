@@ -58,7 +58,7 @@
           <li><a class="active " href="/">Home</a></li>
           <li><a href="">지역</a></li>
           <li><a href="">여행지</a></li>
-          <li><a href="">맛집</a></li>
+          <li><a href="/food">맛집</a></li>
           <li><a href="">축제</a></li>
           <li><a href="">여행정보</a></li>
         </ul>

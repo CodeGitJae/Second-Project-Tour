@@ -1,0 +1,65 @@
+.citys {
+    display: flex;
+    flex-wrap: wrap;
+}
+.citys button {
+	padding: 10px;
+	margin: 2px;
+    margin-bottom: 10px;
+}
+    
+.article-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* 아이템을 좌우로 고르게 배치 */
+}
+
+.article-item {
+    width: calc(25% - 20px); /* 아이템 너비를 25%로 설정 (마진 제외) */
+    margin-bottom: 20px; /* 아이템 간 간격 조정 */
+    box-sizing: border-box; /* 박스 크기를 마진과 패딩을 포함한 값으로 계산 */
+}
+
+.article-item:hover{
+  cursor: pointer;
+  transform: rotate(0deg) scale(1.1);    /* 요소를 확대 */
+  transition: .5s all ease;
+  z-index: 400;              /* 요소를 앞으로 */
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.image-box {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 사진을 외곡 없이 자연스럽게 box에 꽉차게 */
+    display: block;
+}
+
+.text-box {
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.text-box h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.text-box p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+li{
+  list-style-type: none;  /* li 태그에 점을 없애는 설정*/
+}
