@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.flower.tour.service.SeoulTourService;
@@ -45,25 +46,44 @@ public class SeoulTourController {
 	
 	@GetMapping("/Seoul/area/{selectedSigungu}")
 	@ResponseBody
-	public List<Map<String, Object>> getSelectedBySigungu(@PathVariable("selectedSigungu") int sigunguCode)
+	public Map<String, Object> getSelectedBySigungu(@PathVariable("selectedSigungu") int sigunguCode,
+														@RequestParam(value = "page", defaultValue = "1") int page)
 										throws URISyntaxException, JsonProcessingException{		
 
 		// 해당 지역 코드를 기반으로 해당 지역의 관광 정보 조회
-		List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, 1, sigunguCode);
-		List<Map<String, Object>> totalCount = stService.getTotalCount(areaCode, contentTypeId, numOfRows, 1, sigunguCode);
-    	System.out.println(totalCount);
-		
-		return tourData;
+		List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, page, sigunguCode);
+		List<Map<String, Object>> totalCountList = stService.getTotalCount(areaCode, contentTypeId, numOfRows, page, sigunguCode);
+    	
+		// 전체 객체수 갖져오기
+    	int totalCount = Integer.parseInt(totalCountList.get(0).get("totalCount").toString());
+    	// 전체 페이지 수 계산
+    	int totalPages = (int) Math.ceil((double) totalCount / numOfRows);
+    	int curpage = page;
+    	
+    	Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("tourData", tourData);
+        responseMap.put("totalCount", totalCount);
+        responseMap.put("totalPages", totalPages);
+        responseMap.put("curpage", curpage);
+
+        return responseMap;
 	}
 
     @GetMapping("/Seoul/area")
-    public String getAllTourData(Model model) 
+    public String getAllTourData(@RequestParam(value = "page", defaultValue = "1") int page, Model model) 
                               throws URISyntaxException, JsonProcessingException {
     	List<Map<String, Object>> sigunguCode = stService.getAreaCode(25, 1, 1);
-    	List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, 1, 0);
-    	List<Map<String, Object>> totalCount = stService.getTotalCount(areaCode, contentTypeId, numOfRows, 1, 0);
-    	System.out.println(totalCount);
-    	
+    	List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, page, 0);
+    	List<Map<String, Object>> totalCountList = stService.getTotalCount(areaCode, contentTypeId, numOfRows, page, 0);
+
+    	// 전체 객체수 갖져오기
+    	int totalCount = Integer.parseInt(totalCountList.get(0).get("totalCount").toString());
+    	// 전체 페이지 수 계산
+    	int totalPages = (int) Math.ceil((double) totalCount / numOfRows);
+    	    
+    	model.addAttribute("totalPages", totalPages);
+    	model.addAttribute("totalCount", totalCount);
+    	model.addAttribute("curPage", page);
     	model.addAttribute("sigunguCode", sigunguCode);
         model.addAttribute("tourData", tourData);
         

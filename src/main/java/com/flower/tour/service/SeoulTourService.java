@@ -64,7 +64,7 @@ public class SeoulTourService {
 		}
 
 		
-		System.out.println(filteredTotalcount);
+//		System.out.println(filteredTotalcount);
 		return filteredTotalcount;
 	}
 	

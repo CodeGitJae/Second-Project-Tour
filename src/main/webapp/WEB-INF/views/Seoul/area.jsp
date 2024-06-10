@@ -62,15 +62,38 @@
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Previous">
+		      <a class="page-link" href="/Seoul/area?page=${curPage - 1}" aria-label="Previous">
 		        <span aria-hidden="true">&laquo;</span>
 		      </a>
 		    </li>
-		    <li class="page-item"><a class="page-link" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    <c:set var="startPage" value="${curPage - (curPage % 5 == 0 ? 4 : (curPage % 5 - 1))}" />
+		    	<c:if test="${startPage < 1}">
+                    <c:set var="startPage" value="1" />
+              	</c:if>
+	        <c:set var="endPage" value="${startPage + 4}" />
+	        
+	        <c:if test="${endPage > totalPages}">
+	            <c:set var="endPage" value="${totalPages}" />
+	        </c:if>
+
+		    <c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+		     	<c:choose>
+		     		<c:when test="${pageNum ==curPage}">
+		    			<strong>
+		    				<li class="page-item">
+		    					<a class="page-link" href="/Seoul/area?page=${pageNum}" style="color: red;">
+		    						${pageNum}
+		    					</a>
+		    				</li>
+						</strong>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="/Seoul/area?page=${pageNum}">${pageNum}</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
+		      <a class="page-link" href="/Seoul/area?page=${curPage + 1}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
 		    </li>
@@ -80,10 +103,12 @@
 </div>
     
 </main>
+
     
 <%@ include file="../components/footer.jsp" %>
 
 <script src="${pageContext.request.contextPath}/assets/js/filteredItems.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/filteredPaging.js"></script>
 <script>
 $(document).ready(function(){
 	$(".showAllSigunguBtn").click(function(){
@@ -96,6 +121,7 @@ $(document).ready(function(){
 			success: function(selectedAreaArr){
 				let items = showItemsByGuArr(selectedAreaArr);
 				$(".article-list").html(items);
+				
 			}
 		});
 	});
@@ -108,8 +134,14 @@ $(document).ready(function(){
 			type: 'GET',
 			url: `/Seoul/area/`+ selectedSigungu,
 			dataType: 'json',
-			success: function(selectedAreaArr){
-				let items = showItemsByGuArr(selectedAreaArr);
+			success: function(responseMap){
+				console.log(responseMap);
+				var tourData = response.tourData;
+		        var totalCount = response.totalCount;
+		        var totalPages = response.totalPages;
+		        var curpage = response.curpage;
+
+				let items = showItemsByGuArr(responseMap.tourData);
 				$(".article-list").html(items);
 				
 			},

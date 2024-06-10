@@ -65,8 +65,12 @@ li{
   list-style-type: none;  /* li 태그에 점을 없애는 설정*/
 }
 
-.pagination{
-	margin: 10px 0 10px;
-	justify-content: center;
+.pagination {
+    margin: 20px 0; /* 페이지네이션과 푸터 사이의 간격을 늘립니다 */
+    display: flex;
+    justify-content: center;
 }
 
+footer {
+    margin-top: 100px; /* 푸터의 상단 마진을 추가하여 페이지네이션과의 간격을 만듭니다 */
+}
