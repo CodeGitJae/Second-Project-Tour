@@ -32,7 +32,7 @@
   <link href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
   
   <%
     WebApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
@@ -70,7 +70,7 @@
           <li><a class="active " href="/">Home</a></li>
           <li><a href="">지역</a></li>
           <li><a href="">여행지</a></li>
-          <li><a href="/food">맛집</a></li>
+          <li><a href="/Restaurant/area">맛집</a></li>
           <li><a href="">축제</a></li>
           <li><a href="">여행정보</a></li>
         </ul>

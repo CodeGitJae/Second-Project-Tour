@@ -18,12 +18,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class RestaurantService {
     //지역 코드 API 데이터 받아오기
+	
+
+
     public List<Map<String, Object>> getRestaurantAreaCode(int numOfRows, int pageNo, int areaCode) throws URISyntaxException, JsonProcessingException {
         String link = "https://apis.data.go.kr/B551011/KorService1/areaCode1";
         String MobileOS = "ETC";
         String MobileApp = "TEST";
         String _type = "json";
-        String serviceKey = "TI1oFdCS1SPKKvp9WcBKVs8y7gKPOoRQKZDXzGfDsPsRXl9oleYMNRi%2BSU2am5ee%2BA02b3iUX2qKzGoec7xNAQ%3D%3D";
+        String serviceKey = "7I86%2BkwZRg7drfjl1VYsPjf87SUYpH9C8qiinq4yGhtdvzKDP26bRezIP%2FKNbTkTeKerSADF3S0Pxsllv9lS4w%3D%3D";
 
         String url = link + "?" +
             "numOfRows=" + numOfRows +
@@ -60,17 +63,19 @@ public class RestaurantService {
 
         return filteredRegion;
     }
+    
+    
 
     // 위치 기반 음식점 정보 조회 API 데이터 받아오기
     @SuppressWarnings("unchecked")
-    public List<Map<String, Object>> getRestaurantData(int radius, int contentTypeId, int numOfRows, int pageNo, String mapX, String mapY, String address)
+    public List<Map<String, Object>> getRestaurantData(int areaCode, String address, int contentTypeId, int numOfRows, int pageNo, int sigunguCode)
             throws URISyntaxException, JsonProcessingException {
 
         String link = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
         String MobileOS = "ETC";
         String MobileApp = "TEST";
         String _type = "json";
-        String serviceKey = "TI1oFdCS1SPKKvp9WcBKVs8y7gKPOoRQKZDXzGfDsPsRXl9oleYMNRi%2BSU2am5ee%2BA02b3iUX2qKzGoec7xNAQ%3D%3D";
+        String serviceKey = "7I86%2BkwZRg7drfjl1VYsPjf87SUYpH9C8qiinq4yGhtdvzKDP26bRezIP%2FKNbTkTeKerSADF3S0Pxsllv9lS4w%3D%3D";
 
         String url = link + "?" +
             "numOfRows=" + numOfRows +
@@ -79,9 +84,8 @@ public class RestaurantService {
             "&MobileApp=" + MobileApp +
             "&_type=" + _type +
             "&contentTypeId=" + contentTypeId +
-            "&areaCode=" + radius +
-            "&mapX=" + mapX +
-            "&mapY=" + mapY +
+            "&areaCode=" + areaCode +
+            "&sigunguCode=" + sigunguCode +
             "&serviceKey=" + serviceKey;
 
         URI uri = new URI(url);
@@ -109,13 +113,4 @@ public class RestaurantService {
         return filteredInfo;
     }
 
-    public List<Map<String, Object>> getRestaurantData(int i, String string, int j, int k, int l, int m, int sigunguCode) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public List<Map<String, Object>> getRestaurantData(int i, int j, int k, int l, int m, int outerSigunguCode) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }
