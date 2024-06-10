@@ -21,20 +21,18 @@ public class SeoulTourController {
 	@Autowired
 	private SeoulTourService stService;
 	
-	@GetMapping("/Seoul/area/seoul")
+	private final int areaCode = 1;
+	private final int contentTypeId = 12;
+	private final int numOfRows = 8;
+	
+	@GetMapping("/Seoul/area/all")
 	@ResponseBody
 	public List<Map<String, Object>> getSelectedBySeoul()
 										throws URISyntaxException, JsonProcessingException{		
-		List<Map<String, Object>> sigunguCode = stService.getAreaCode(25, 1, 1);
-        List<Map<String, Object>> allTourData = new ArrayList<>();
-    	
-    	for (Map<String, Object> sigungu : sigunguCode) {
-    		int outerSigunguCode = Integer.parseInt(sigungu.get("code").toString());   	
-    		List<Map<String, Object>> tourData = stService.getAreaData(1, "서울", 12, 1000, 1, outerSigunguCode);
+//		List<Map<String, Object>> sigunguCode = stService.getAreaCode(25, 1, 1);
+     	List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, 1, 0);
     		
-    		allTourData.addAll(tourData);
-    	}
-    	return allTourData;
+    	return tourData;
     	
 //		List<List<Map<String, Object>>> tourData = new ArrayList<>();
 //		
@@ -51,33 +49,49 @@ public class SeoulTourController {
 										throws URISyntaxException, JsonProcessingException{		
 
 		// 해당 지역 코드를 기반으로 해당 지역의 관광 정보 조회
-		List<Map<String, Object>> tourData = stService.getAreaData(1, "서울", 12, 1000, 1, sigunguCode);
+		List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, 1, sigunguCode);
+		List<Map<String, Object>> totalCount = stService.getTotalCount(areaCode, contentTypeId, numOfRows, 1, sigunguCode);
+    	System.out.println(totalCount);
 		
-		return tourData; 
+		return tourData;
 	}
 
     @GetMapping("/Seoul/area")
     public String getAllTourData(Model model) 
                               throws URISyntaxException, JsonProcessingException {
     	List<Map<String, Object>> sigunguCode = stService.getAreaCode(25, 1, 1);
-        List<Map<String, Object>> allTourData = new ArrayList<>();
+    	List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, 1, 0);
+    	List<Map<String, Object>> totalCount = stService.getTotalCount(areaCode, contentTypeId, numOfRows, 1, 0);
+    	System.out.println(totalCount);
     	
-    	for (Map<String, Object> sigungu : sigunguCode) {
-    		int outerSigunguCode = Integer.parseInt(sigungu.get("code").toString());   	
-    		String sigunguName = sigungu.get("name").toString();
-    		List<Map<String, Object>> tourData = stService.getAreaData(1, "서울", 12, 1000, 1, outerSigunguCode);
-       
-    		Map<String, Object> sigunguInfo = new HashMap<>();
-    		sigunguInfo.put("sigunguCode", outerSigunguCode);
-    		sigunguInfo.put("sigunguName", sigunguName);
-    		sigunguInfo.put("tourData", tourData);
-    		
-    		allTourData.add(sigunguInfo);
-    	}
-        model.addAttribute("allTourData", allTourData);
+    	model.addAttribute("sigunguCode", sigunguCode);
+        model.addAttribute("tourData", tourData);
         
         return "Seoul/area"; 
     }
 
 	 
 }
+ 	
+    	//   	getSelectedBySigungu 클래스 처음 구현 했던 코드 
+//        List<Integer> pageCount = new ArrayList<>();
+        
+//    	for (Map<String, Object> sigungu : sigunguCode) {
+//    		int outerSigunguCode = Integer.parseInt(sigungu.get("code").toString());   	
+//    		String sigunguName = sigungu.get("name").toString();
+////    		int totalCount = Integer.parseInt(sigungu.get("totalCount").toString());
+////    		int totalPages = totalCount / numOfRows;
+////    		for (int pageNo = 1; pageNo <= totalPages; pageNo++) {
+////    				pageCount.add(pageNo);
+////    		}
+//    		List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, 1, outerSigunguCode);
+//       
+//    		Map<String, Object> sigunguInfo = new HashMap<>();
+//    		sigunguInfo.put("sigunguCode", outerSigunguCode);
+//    		sigunguInfo.put("sigunguName", sigunguName);
+//    		sigunguInfo.put("tourData", tourData);
+//    		
+//    		allTourData.add(sigunguInfo);
+//    	}
+//        model.addAttribute("allTourData", allTourData);
+        

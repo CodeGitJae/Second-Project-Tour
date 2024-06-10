@@ -20,19 +20,19 @@
   	  <h1>서울 지역 관광 정보</h1>
    <div class="citys"> 
    			<button type="button" class="showAllSigunguBtn" data-sigungu="0">서울</button>
-    <c:forEach var="sigunguInfo" items="${allTourData}">
-    	 	<button type="button" class="sigunguBtn" data-sigungu="${sigunguInfo.sigunguCode}">${sigunguInfo.sigunguName}</button>
+    <c:forEach var="sigunguInfo" items="${sigunguCode}">
+    	 	<button type="button" class="sigunguBtn" data-sigungu="${sigunguInfo.code}">${sigunguInfo.name}</button>
     </c:forEach>
    </div> 
 	  <div class="article-list-slide mt-4">
 	    <ul class="article-list">
-		    <c:forEach var="sigunguInfo" items="${allTourData}">
-		        <c:forEach var="item" items="${sigunguInfo.tourData}">
-		          	 <c:if test="${not empty item.firstimage}">
+	        <c:forEach var="item" items="${tourData}">
+	        	<c:choose>
+		        	<c:when test="${empty item.firstimage}">
 			            <li class="article-item">
 			            	<div class="items">
 				                <div class="image-box">
-		                            <img src="${item.firstimage}" alt="${item.title}">
+		                            <img src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
 				                </div>
 				                <div class="text-box">
 				                    <h3>${item.title}</h3>
@@ -40,10 +40,42 @@
 				                </div>
 			                </div>
 			            </li>
-		           	</c:if>
-		        </c:forEach>
-		    </c:forEach>
+		            </c:when>
+		            <c:otherwise>
+			             <li class="article-item">
+				            	<div class="items">
+					                <div class="image-box">
+			                            <img src="${item.firstimage}" alt="${item.title}">
+					                </div>
+					                <div class="text-box">
+					                    <h3>${item.title}</h3>
+					                    <p>${item.addr1}</p>
+					                </div>
+				                </div>
+				            </li>
+		            </c:otherwise>
+	            </c:choose>
+	        </c:forEach>
 		</ul>
+	</div>
+	<div class="pagination">
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination">
+		    <li class="page-item">
+		      <a class="page-link" href="#" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    <li class="page-item"><a class="page-link" href="#">1</a></li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    <li class="page-item">
+		      <a class="page-link" href="#" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
 	</div>
 </div>
     
@@ -59,7 +91,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: 'GET',
-			url: '/Seoul/area/seoul',
+			url: '/Seoul/area/all',
 			dataType: 'json',
 			success: function(selectedAreaArr){
 				let items = showItemsByGuArr(selectedAreaArr);

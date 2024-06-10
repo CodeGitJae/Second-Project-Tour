@@ -64,3 +64,9 @@
 li{
   list-style-type: none;  /* li 태그에 점을 없애는 설정*/
 }
+
+.pagination{
+	margin: 10px 0 10px;
+	justify-content: center;
+}
+

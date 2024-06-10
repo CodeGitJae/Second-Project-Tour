@@ -20,6 +20,53 @@ public class SeoulTourService {
 	
 	private final String servicekey = "G34t4KEv8WaZXw02DVg%2BQLWymgFJ%2Fxrh%2BTJZM6Cz8kZse6qoFWUcAMQqL1xfiRmCeVinKefaKFLENM1naTfzgg%3D%3D";
 
+	//지역별 totalCount 데이터 받아오기
+	public List<Map<String, Object>> getTotalCount(int areaCode, int contentTypeId,
+												int numOfRows, int pageNo, int sigunguCode) throws URISyntaxException, JsonProcessingException{
+		String link = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
+		String MobileOS = "ETC";
+		String MobileApp = "TEST";
+		String _type = "json";
+		
+		String url = link + "?" +
+			"numOfRows=" + numOfRows +
+			"&pageNo=" + pageNo +
+		    "&MobileOS=" + MobileOS +
+		    "&MobileApp=" + MobileApp +
+		    "&_type=" + _type + 
+		    "&contentTypeId=" + contentTypeId +
+		    "&areaCode=" + areaCode +
+		    "&serviceKey=" + servicekey;
+		
+		if(sigunguCode != 0)
+			url += "&sigunguCode=" + sigunguCode;
+		
+		URI uri = new URI(url);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		String response = restTemplate.getForObject(uri, String.class);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode root = objectMapper.readTree(response);
+		JsonNode body = root.path("response").path("body");
+
+		List<Map<String, Object>> filteredTotalcount = new ArrayList<>();
+				
+		if(body.has("totalCount") && body.has("numOfRows")) {
+			Map<String, Object> totalCountMap = new HashMap<>();
+			totalCountMap.put("totalCount", body.get("totalCount").asText());
+			totalCountMap.put("numOfRows", body.get("numOfRows").asText());
+			
+			filteredTotalcount.add(totalCountMap);
+		}
+
+		
+		System.out.println(filteredTotalcount);
+		return filteredTotalcount;
+	}
 	
 	//지역 코드 API 데이터 받아오기
 	public List<Map<String, Object>> getAreaCode(int numOfRows, int pageNo, int areaCode) throws URISyntaxException, JsonProcessingException{
@@ -61,18 +108,14 @@ public class SeoulTourService {
 				}
 			}
 		}
-
+		
 		return filteredSigungu;
 		
 	}
 	
 	// 지역 기반 관광 정보 조회 API 데이터 받아오기
-	public List<Map<String, Object>> getAreaData(int areaCode, String address, int contentTypeId,
+	public List<Map<String, Object>> getAreaData(int areaCode, int contentTypeId,
 				int numOfRows, int pageNo, int sigunguCode) throws URISyntaxException, JsonProcessingException {
-
-
-		System.out.println("////////////////////");
-		System.out.println(sigunguCode);
 		
 		String link = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
 		String MobileOS = "ETC";
@@ -89,8 +132,11 @@ public class SeoulTourService {
 		//    "&arrange" + arrange + 
 		    "&contentTypeId=" + contentTypeId +
 		    "&areaCode=" + areaCode +
-		    "&sigunguCode=" + sigunguCode +
+//		    "&sigunguCode=" + sigunguCode +
 		    "&serviceKey=" + servicekey;
+		
+		if(sigunguCode != 0)
+			url += "&sigunguCode=" + sigunguCode;
 		
 		URI uri = new URI(url);
 		
@@ -106,7 +152,8 @@ public class SeoulTourService {
 		List<Map<String, Object>> filteredItems = new ArrayList<>();
 		if(items.isArray()) {
 		for(JsonNode item : items) {
-			if(item.has("addr1") && item.get("addr1").asText().contains(address)) {
+											//주소와 사진 필드(key)가 있는지 확인 그리고 사진에 값이 있으면 조건 True
+			if(item.has("addr1") && item.has("firstimage")) { 
 				Map<String, Object> itemMap= objectMapper.convertValue(item, Map.class);
 				filteredItems.add(itemMap);
 			}
