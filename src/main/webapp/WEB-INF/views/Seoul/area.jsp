@@ -62,9 +62,18 @@
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
-		      <a class="page-link" href="/Seoul/area?page=${curPage - 1}" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
+		    <c:choose>
+		    	<c:when test="${curPage <= 1 }">
+			      <a class="page-link" href="/Seoul/area?page=1" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+		      	</c:when>
+		      	<c:otherwise>
+		      		<a class="page-link" href="/Seoul/area?page=${curPage - 1}" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+		      	</c:otherwise>
+	      	</c:choose>
 		    </li>
 		    <c:set var="startPage" value="${curPage - (curPage % 5 == 0 ? 4 : (curPage % 5 - 1))}" />
 		    	<c:if test="${startPage < 1}">
@@ -77,26 +86,26 @@
 	        </c:if>
 
 		    <c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
-		     	<c:choose>
-		     		<c:when test="${pageNum ==curPage}">
-		    			<strong>
-		    				<li class="page-item">
-		    					<a class="page-link" href="/Seoul/area?page=${pageNum}" style="color: red;">
-		    						${pageNum}
-		    					</a>
-		    				</li>
-						</strong>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="/Seoul/area?page=${pageNum}">${pageNum}</a></li>
-					</c:otherwise>
-				</c:choose>
+				<li class="page-item ${pageNum == curPage ? 'active' : ''}">
+					<a class="page-link" href="/Seoul/area?page=${pageNum}">${pageNum}</a>
+				</li>
 			</c:forEach>
-		    <li class="page-item">
-		      <a class="page-link" href="/Seoul/area?page=${curPage + 1}" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
+			<c:choose>
+				<c:when test="${curPage >= totalPages}">
+				    <li class="page-item">
+				      <a class="page-link" href="/Seoul/area?page=${totalPages}" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+			    </c:when>
+			    <c:otherwise>
+			    	<li class="page-item">
+				      <a class="page-link" href="/Seoul/area?page=${curPage + 1}" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+			    </c:otherwise>
+	    	</c:choose>
 		  </ul>
 		</nav>
 	</div>
@@ -111,6 +120,101 @@
 <script src="${pageContext.request.contextPath}/assets/js/filteredPaging.js"></script>
 <script>
 $(document).ready(function(){
+	// 시군구 코드 사용을 위해 전역 변수 선언
+	let selectedSigungu = 0;
+	
+	// ajax 통신으로 페이징 구현
+	$(".sigunguBtn").click(function(){
+		selectedSigungu = $(this).data('sigungu');
+		
+	    // 해당 지역 정보를 서버로부터 가져오기
+		$.ajax({
+			type: 'GET',
+			url: `/Seoul/area/`+ selectedSigungu,
+			dataType: 'json',
+			success: function(responseMap){
+				console.log(responseMap);
+				var tourData = responseMap.tourData;
+/* 		        var totalCount = responseMap.totalCount; */
+		        var totalPages = responseMap.totalPages;
+		        var curPage = responseMap.curPage;
+				
+				// 지역 정보에 따른 새로운 페이지 불러오기
+				let pageing = changeGuPaging(curPage, totalPages);
+				$(".pagination").html(pageing);
+				
+			},
+		});
+
+	});
+	
+	// 지역 pageNumber 버튼 클릭하면 해당 페이지로 이동 
+	$("body").on('click', '.movePage', function(e){
+		e.preventDefault();
+		
+		let page = $(this).text();
+		
+	    // 특정 지역 페이지 ajax 통신
+		$.ajax({
+			type: 'GET',
+			url: '/Seoul/area/' + selectedSigungu + '?page='+page,
+			dataType: 'json',
+			success: function(response){
+				console.log(response)
+				var tourData = response.tourData;
+		        var totalPages = response.totalPages;
+		        var curPage = response.curPage;
+		        
+		    	// 지역 버튼 클릭되면 해당 지역만 필터링 후 불러오기
+				let items = showItemsByGuArr(tourData);
+				$(".article-list").html(items);
+				
+				// 지역 정보에 따른 새로운 페이지 불러오기
+				let pageing = changeGuPaging(curPage, totalPages);
+				$(".pagination").html(pageing);
+		   
+			},
+			error: function(xhr, status, error){
+				console.error(error);
+			}
+		});
+
+	});
+	
+	// 이전 페이지 다음 페이지 버튼 동작 구현 
+	$("body").on('click', '.prevPage, .nextPage', function(e){
+		e.preventDefault();
+		
+		let page = $(this).data('page');
+		
+	    // 특정 지역 페이지 ajax 통신
+		$.ajax({
+			type: 'GET',
+			url: '/Seoul/area/' + selectedSigungu + '?page='+page,
+			dataType: 'json',
+			success: function(response){
+/* 				console.log(response) */
+				var tourData = response.tourData;
+		        var totalPages = response.totalPages;
+		        var curPage = response.curPage;
+		        
+		    	// 지역 버튼 클릭되면 해당 지역만 필터링 후 불러오기
+				let items = showItemsByGuArr(tourData);
+				$(".article-list").html(items);
+				
+				// 지역 정보에 따른 새로운 페이지 불러오기
+				let pageing = changeGuPaging(curPage, totalPages);
+				$(".pagination").html(pageing);	   
+				
+			},
+			error: function(xhr, status, error){
+				console.error(error);
+			}
+		});
+
+	});
+	
+	// 서울 버튼 클릭하면 서울 전체 데이터가 보이도록 설정
 	$(".showAllSigunguBtn").click(function(){
 /* 		let showAllSeoul = $(this).data('sigungu'); */
 		
@@ -126,6 +230,7 @@ $(document).ready(function(){
 		});
 	});
 		
+	// 지역 버튼 클릭하면 지역 정보만 필터링 되도록 설정
 	$(".sigunguBtn").click(function(){
 		let selectedSigungu = $(this).data('sigungu');
 		
@@ -135,13 +240,10 @@ $(document).ready(function(){
 			url: `/Seoul/area/`+ selectedSigungu,
 			dataType: 'json',
 			success: function(responseMap){
-				console.log(responseMap);
-				var tourData = response.tourData;
-		        var totalCount = response.totalCount;
-		        var totalPages = response.totalPages;
-		        var curpage = response.curpage;
-
-				let items = showItemsByGuArr(responseMap.tourData);
+				var tourData = responseMap.tourData;
+		        
+				// 지역 버튼 클릭되면 해당 지역만 필터링 후 불러오기
+				let items = showItemsByGuArr(tourData);
 				$(".article-list").html(items);
 				
 			},
@@ -150,6 +252,7 @@ $(document).ready(function(){
 			}
 		});
 
-	});
+	});	
+	
 });
 </script>

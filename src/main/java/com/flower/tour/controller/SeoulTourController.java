@@ -58,13 +58,13 @@ public class SeoulTourController {
     	int totalCount = Integer.parseInt(totalCountList.get(0).get("totalCount").toString());
     	// 전체 페이지 수 계산
     	int totalPages = (int) Math.ceil((double) totalCount / numOfRows);
-    	int curpage = page;
+    	int curPage = page;
     	
     	Map<String, Object> responseMap = new HashMap<>();
         responseMap.put("tourData", tourData);
-        responseMap.put("totalCount", totalCount);
+//        responseMap.put("totalCount", totalCount);
         responseMap.put("totalPages", totalPages);
-        responseMap.put("curpage", curpage);
+        responseMap.put("curPage", curPage);
 
         return responseMap;
 	}
@@ -82,7 +82,7 @@ public class SeoulTourController {
     	int totalPages = (int) Math.ceil((double) totalCount / numOfRows);
     	    
     	model.addAttribute("totalPages", totalPages);
-    	model.addAttribute("totalCount", totalCount);
+//    	model.addAttribute("totalCount", totalCount);
     	model.addAttribute("curPage", page);
     	model.addAttribute("sigunguCode", sigunguCode);
         model.addAttribute("tourData", tourData);

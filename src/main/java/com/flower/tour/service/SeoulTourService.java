@@ -18,8 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class SeoulTourService {
 	
-	private final String servicekey = "G34t4KEv8WaZXw02DVg%2BQLWymgFJ%2Fxrh%2BTJZM6Cz8kZse6qoFWUcAMQqL1xfiRmCeVinKefaKFLENM1naTfzgg%3D%3D";
-
+//	private final String servicekey = "G34t4KEv8WaZXw02DVg%2BQLWymgFJ%2Fxrh%2BTJZM6Cz8kZse6qoFWUcAMQqL1xfiRmCeVinKefaKFLENM1naTfzgg%3D%3D";
+	private final String servicekey = "7I86%2BkwZRg7drfjl1VYsPjf87SUYpH9C8qiinq4yGhtdvzKDP26bRezIP%2FKNbTkTeKerSADF3S0Pxsllv9lS4w%3D%3D";
 	//지역별 totalCount 데이터 받아오기
 	public List<Map<String, Object>> getTotalCount(int areaCode, int contentTypeId,
 												int numOfRows, int pageNo, int sigunguCode) throws URISyntaxException, JsonProcessingException{

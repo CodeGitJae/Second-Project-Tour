@@ -69,8 +69,22 @@ li{
     margin: 20px 0; /* 페이지네이션과 푸터 사이의 간격을 늘립니다 */
     display: flex;
     justify-content: center;
+    list-style: none;
+}
+          
+.page-item {
+    margin: 0 1px;
 }
 
+.page-item a {
+    text-decoration: none;
+    color: blue;
+}
+
+.page-item.active a {
+    font-weight: bold;
+}
+        
 footer {
     margin-top: 100px; /* 푸터의 상단 마진을 추가하여 페이지네이션과의 간격을 만듭니다 */
 }
