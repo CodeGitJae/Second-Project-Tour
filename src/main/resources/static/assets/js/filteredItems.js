@@ -9,7 +9,9 @@ function showItemsByGuArr(areaArr){
 				            <li class="article-item">
 				            	<div class="items">
 					                <div class="image-box">
-			                            <img src="/assets/img/preparingforimage.png" alt="${item.title}">
+					                	<a href="/Seoul/showdetail?contentId=${item.contentid}">
+			                              	<img src="/assets/img/preparingforimage.png" alt="${item.title}">
+					                	</a>
 					                </div>
 					                <div class="text-box">
 					                    <h3>${item.title}</h3>
@@ -21,7 +23,9 @@ function showItemsByGuArr(areaArr){
 	    str +=	`	        <li class="article-item">
 				            	<div class="items">
 					                <div class="image-box">
-			                            <img src="${item.firstimage}" alt="${item.title}">
+						                <a href="/Seoul/showdetail?contentId=${item.contentid}">
+				                            <img src="${item.firstimage}" alt="${item.title}">
+						                </a>
 					                </div>
 					                <div class="text-box">
 					                    <h3>${item.title}</h3>

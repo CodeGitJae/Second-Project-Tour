@@ -10,21 +10,23 @@
     <div class="container">
 
       <div class="d-flex justify-content-between align-items-center">
-        <h2>해당 페이지 문구 넣으면됨</h2>
+        <h2 style="font-size: 30px; font-weight: bold; color: #999; text-align: center;">
+        	한국관광공사에서 추천하는 외국인이 가봐야 할 서울 행정지역구 관광지 정보 소개글
+        </h2>
       </div>
 
     </div>
   </section><!-- End Our Services Section -->
 
  <div class="container" style="height:800px">   
-  	  <h1>서울 지역 관광 정보</h1>
-   <div class="citys"> 
+  	  <h1 class="showGu">서울 지역 관광 정보 [서울]</h1>
+   <div class="citys">    <!--  서울 지역 포함한 전체 구 지역 버튼 생성 -->
    			<button type="button" class="showAllSigunguBtn" data-sigungu="0">서울</button>
     <c:forEach var="sigunguInfo" items="${sigunguCode}">
     	 	<button type="button" class="sigunguBtn" data-sigungu="${sigunguInfo.code}">${sigunguInfo.name}</button>
     </c:forEach>
    </div> 
-	  <div class="article-list-slide mt-4">
+	  <div class="article-list-slide mt-4">   <!-- 지역 버튼 클릭하면 서울 관광지 보여주는 div -->
 	    <ul class="article-list">
 	        <c:forEach var="item" items="${tourData}">
 	        	<c:choose>
@@ -32,7 +34,9 @@
 			            <li class="article-item">
 			            	<div class="items">
 				                <div class="image-box">
+		                           <a href="/Seoul/showdetail?contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
 		                            <img src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
+				                   </a>
 				                </div>
 				                <div class="text-box">
 				                    <h3>${item.title}</h3>
@@ -45,7 +49,9 @@
 			             <li class="article-item">
 				            	<div class="items">
 					                <div class="image-box">
+					                  <a href="/Seoul/showdetail?contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
 			                            <img src="${item.firstimage}" alt="${item.title}">
+					                  </a>
 					                </div>
 					                <div class="text-box">
 					                    <h3>${item.title}</h3>
@@ -58,20 +64,19 @@
 	        </c:forEach>
 		</ul>
 	</div>
-	<div class="pagination">
+	<div class="pagination">      <!-- 서울 지역 페이지 네이션 구현 / 지역벌 페이지는 ajax로 구현함-->
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
+    		    <a class="page-link" href="/Seoul/area?page=1" aria-label="Previous">
+			      <span aria-hidden="true">&laquo;</span>
+		        </a>
 		    <c:choose>
-		    	<c:when test="${curPage <= 1 }">
-			      <a class="page-link" href="/Seoul/area?page=1" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
+		    	<c:when test="${curPage - 5 < 1}">
+			      <li class="page-item"><a class="page-link" href="/Seoul/area?page=1">이전</a></li>
 		      	</c:when>
 		      	<c:otherwise>
-		      		<a class="page-link" href="/Seoul/area?page=${curPage - 1}" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
+		      		<li class="page-item"><a class="page-link" href="/Seoul/area?page=${curPage - 5}">이전</a></li>
 		      	</c:otherwise>
 	      	</c:choose>
 		    </li>
@@ -91,21 +96,18 @@
 				</li>
 			</c:forEach>
 			<c:choose>
-				<c:when test="${curPage >= totalPages}">
-				    <li class="page-item">
-				      <a class="page-link" href="/Seoul/area?page=${totalPages}" aria-label="Next">
-				        <span aria-hidden="true">&raquo;</span>
-				      </a>
-				    </li>
+				<c:when test="${curPage + 5 >= totalPage}">
+					<li class="page-item"><a class="page-link" href="/Seoul/area?page=${totalPages}">다음</a></li>
 			    </c:when>
 			    <c:otherwise>
-			    	<li class="page-item">
-				      <a class="page-link" href="/Seoul/area?page=${curPage + 1}" aria-label="Next">
-				        <span aria-hidden="true">&raquo;</span>
-				      </a>
-				    </li>
+			    	<li class="page-item"><a class="page-link" href="/Seoul/area?page=${curPage + 5}">다음</a></li>
 			    </c:otherwise>
 	    	</c:choose>
+    	   	 <li class="page-item">
+		      <a class="page-link" href="/Seoul/area?page=${totalPages}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
 		  </ul>
 		</nav>
 	</div>
@@ -120,6 +122,14 @@
 <script src="${pageContext.request.contextPath}/assets/js/filteredPaging.js"></script>
 <script>
 $(document).ready(function(){
+
+	let siName = '';
+	
+	$(".sigunguBtn").click(function(){
+		siName = $(this).text();
+		console.log("선택된 시군구 이름: " + siName);
+	});
+	
 	// 시군구 코드 사용을 위해 전역 변수 선언
 	let selectedSigungu = 0;
 	
@@ -193,7 +203,7 @@ $(document).ready(function(){
 			url: '/Seoul/area/' + selectedSigungu + '?page='+page,
 			dataType: 'json',
 			success: function(response){
-/* 				console.log(response) */
+				console.log(response) 
 				var tourData = response.tourData;
 		        var totalPages = response.totalPages;
 		        var curPage = response.curPage;
@@ -216,8 +226,13 @@ $(document).ready(function(){
 	
 	// 서울 버튼 클릭하면 서울 전체 데이터가 보이도록 설정
 	$(".showAllSigunguBtn").click(function(){
-/* 		let showAllSeoul = $(this).data('sigungu'); */
+ 		let showAllSeoul = $(this).data('sigungu'); 
 		
+ 		if(showAllSeoul === 0){
+ 			location.href = '/Seoul/area';
+ 		}
+ 		
+ 		
 		$.ajax({
 			type: 'GET',
 			url: '/Seoul/area/all',
@@ -241,11 +256,13 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(responseMap){
 				var tourData = responseMap.tourData;
-		        
+		        console.log(tourData)
 				// 지역 버튼 클릭되면 해당 지역만 필터링 후 불러오기
 				let items = showItemsByGuArr(tourData);
 				$(".article-list").html(items);
 				
+				str = '<h1 class="showGu">서울 지역 관광 정보 ['+ siName +']</h1>'
+				$(".showGu").html(str);
 			},
 			error: function(xhr, status, error){
 				console.error(error);

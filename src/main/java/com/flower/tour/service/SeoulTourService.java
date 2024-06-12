@@ -7,19 +7,73 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class SeoulTourService {
 	
-//	private final String servicekey = "G34t4KEv8WaZXw02DVg%2BQLWymgFJ%2Fxrh%2BTJZM6Cz8kZse6qoFWUcAMQqL1xfiRmCeVinKefaKFLENM1naTfzgg%3D%3D";
-	private final String servicekey = "7I86%2BkwZRg7drfjl1VYsPjf87SUYpH9C8qiinq4yGhtdvzKDP26bRezIP%2FKNbTkTeKerSADF3S0Pxsllv9lS4w%3D%3D";
+	@Value("${apikey.tourArea}")
+	private String serviceKey;
+	
+	public List<Map<String, Object>> makeAreaInfo (int areaCode, int contentTypeId, int contentId) throws JsonMappingException, JsonProcessingException, URISyntaxException{
+		String link = "https://apis.data.go.kr/B551011/KorService1/detailCommon1";
+		String MobileOS = "ETC";
+		String MobileApp = "TEST";
+		String _type = "json";
+		String info = "&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y";
+		
+		String url = link + "?" +
+		    "&MobileOS=" + MobileOS +
+		    "&MobileApp=" + MobileApp +
+		    "&_type=" + _type + 
+		    "&contentId=" + contentId +
+		    "&contentTypeId=" + contentTypeId +
+		    ""+ info +
+		    "&serviceKey=" + serviceKey;
+		
+		URI uri = new URI(url);
+//		System.out.println("uri: "+uri);
+		RestTemplate restTemplate = new RestTemplate();
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		String response = restTemplate.getForObject(uri, String.class);
+//		System.out.println("response: "+response);
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode root = objectMapper.readTree(response);
+		JsonNode items = root.path("response").path("body").path("items").path("item");
+//		System.out.println("items: "+items);
+		List<Map<String, Object>> getContentId = new ArrayList<>();
+		
+		if(items.isArray()) {
+			for(JsonNode item : items) {
+				if(item.has("contentid")) {
+					Map<String, Object> contentIdMap = new HashMap<>();
+					contentIdMap.put("title", item.get("title").asText());
+					contentIdMap.put("tel", item.get("tel").asText());
+					contentIdMap.put("homepage", item.get("homepage").asText());
+					contentIdMap.put("firstimage", item.get("firstimage").asText());
+					contentIdMap.put("addr1", item.get("addr1").asText());
+					contentIdMap.put("lon", item.get("mapx").asText());
+					contentIdMap.put("lat", item.get("mapy").asText());
+					contentIdMap.put("overview", item.get("overview").asText());
+					getContentId.add(contentIdMap);
+				}
+			}
+		}
+//		System.out.println(getContentId);
+		return getContentId;
+	}
+	
+	
 	//지역별 totalCount 데이터 받아오기
 	public List<Map<String, Object>> getTotalCount(int areaCode, int contentTypeId,
 												int numOfRows, int pageNo, int sigunguCode) throws URISyntaxException, JsonProcessingException{
@@ -36,7 +90,7 @@ public class SeoulTourService {
 		    "&_type=" + _type + 
 		    "&contentTypeId=" + contentTypeId +
 		    "&areaCode=" + areaCode +
-		    "&serviceKey=" + servicekey;
+		    "&serviceKey=" + serviceKey;
 		
 		if(sigunguCode != 0)
 			url += "&sigunguCode=" + sigunguCode;
@@ -44,8 +98,8 @@ public class SeoulTourService {
 		URI uri = new URI(url);
 		
 		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		String response = restTemplate.getForObject(uri, String.class);
 		
@@ -82,13 +136,13 @@ public class SeoulTourService {
 		    "&MobileApp=" + MobileApp +
 		    "&areaCode=" + areaCode +
 		    "&_type=" + _type + 
-		    "&serviceKey=" + servicekey;
+		    "&serviceKey=" + serviceKey;
 		
 		URI uri = new URI(url);
 		
 		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		String response = restTemplate.getForObject(uri, String.class);
 		
@@ -133,7 +187,7 @@ public class SeoulTourService {
 		    "&contentTypeId=" + contentTypeId +
 		    "&areaCode=" + areaCode +
 //		    "&sigunguCode=" + sigunguCode +
-		    "&serviceKey=" + servicekey;
+		    "&serviceKey=" + serviceKey;
 		
 		if(sigunguCode != 0)
 			url += "&sigunguCode=" + sigunguCode;
@@ -141,8 +195,8 @@ public class SeoulTourService {
 		URI uri = new URI(url);
 		
 		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		String response = restTemplate.getForObject(uri, String.class);
 		ObjectMapper objectMapper = new ObjectMapper();

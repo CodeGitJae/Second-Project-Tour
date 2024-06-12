@@ -9,18 +9,20 @@ function changeGuPaging(curPage, totalPages){
 		endPage = totalPages;
 	}
 	
-	let prevPage = curPage > 1 ? curPage -1 : 1;
-	let nextPage = curPage < totalPages ? curPage +1 : totalPages;
+	let prevPage =  (curPage - 5 < 1) ? 1 : curPage - 5;
+	let nextPage = (curPage + 5 >= totalPages) ? totalPages : (curPage + 5 );
+/*	let nextPage = curPage < totalPages ? curPage +1 : totalPages;*/
 	
 	
 	let str = `<div class="pagination style="display: flex; justify-content: center;"">
 				<nav aria-label="Page navigation example">
 				  <ul class="pagination">
 				    <li class="page-item">
-				      <a class="page-link prevPage" href="#" data-page="${prevPage}" aria-label="Previous">
+				      <a class="page-link prevPage" href="#" data-page="1" aria-label="Previous">
 				        <span aria-hidden="true">&laquo;</span>
 					      </a>
-					    </li>`;
+					    </li>
+					     <li class="page-item"><a class="page-link prevPage" href="#" data-page="${prevPage}">이전</a></li>`;
 
 	        
 	for(pageNum = startPage; pageNum<=endPage; pageNum++){	
@@ -31,14 +33,15 @@ function changeGuPaging(curPage, totalPages){
 				</c:forEach>`;
 		}
 			
-	  str += `<li class="page-item">
-		      <a class="page-link nextPage" href="#" data-page="${nextPage}" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
-	</div>`
+	  str += `<li class="page-item"><a class="page-link nextPage" href="#" data-page="${nextPage}">다음</a></li>
+		  		<li class="page-item">
+			      <a class="page-link nextPage" href="#" data-page="${totalPages}" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>`
 	
 	return str;
 	}

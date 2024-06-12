@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.flower.tour.service.SeoulTourService;
 
 
@@ -21,10 +22,24 @@ public class SeoulTourController {
 	
 	@Autowired
 	private SeoulTourService stService;
-	
+	// 지역코드: 서울, 타입: 관광지, 한페이지 출력 결과 8
 	private final int areaCode = 1;
 	private final int contentTypeId = 12;
 	private final int numOfRows = 8;
+	
+	
+	@GetMapping("/Seoul/showdetail")
+	public String showDetailInfo(@RequestParam("contentId") String defaultContentId, Model model) throws JsonMappingException, JsonProcessingException, URISyntaxException{
+		
+		// 컨텐트아이디 int 타입으로 parsing
+		int contentId = Integer.parseInt(defaultContentId);
+		
+		List<Map<String, Object>> getAreaDetail = stService.makeAreaInfo(areaCode, contentTypeId, contentId);
+//		System.out.println(getAreaDetail);
+		model.addAttribute("detailData", getAreaDetail);
+		
+		return "/Seoul/showdetail";
+	}
 	
 	@GetMapping("/Seoul/area/all")
 	@ResponseBody
@@ -75,7 +90,7 @@ public class SeoulTourController {
     	List<Map<String, Object>> sigunguCode = stService.getAreaCode(25, 1, 1);
     	List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, page, 0);
     	List<Map<String, Object>> totalCountList = stService.getTotalCount(areaCode, contentTypeId, numOfRows, page, 0);
-
+//    	 System.out.println(tourData);
     	// 전체 객체수 갖져오기
     	int totalCount = Integer.parseInt(totalCountList.get(0).get("totalCount").toString());
     	// 전체 페이지 수 계산
@@ -86,8 +101,8 @@ public class SeoulTourController {
     	model.addAttribute("curPage", page);
     	model.addAttribute("sigunguCode", sigunguCode);
         model.addAttribute("tourData", tourData);
-        
-        return "Seoul/area"; 
+       
+        return "/Seoul/area"; 
     }
 
 	 
