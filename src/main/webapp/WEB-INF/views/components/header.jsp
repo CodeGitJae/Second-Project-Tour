@@ -67,7 +67,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="active " href="/">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="">지역</a></li>
           <li><a href="">여행지</a></li>
           <li><a href="">맛집</a></li>

@@ -249,10 +249,10 @@
    * nav menu active
    */
   const navMenus = document.querySelectorAll('#navbar a');
-  const uri = window.location.pathname;
-  
+  const uri = String(window.location.pathname).split("/").slice(0, 2).join("/");
+
   navMenus.forEach((menu) => {
-    if(uri === menu.getAttribute('href')) {
+    if(uri === String(menu.getAttribute('href')).split("/").slice(0, 2).join("/")) {
       menu.classList.add('active');
       menu.classList.add('fw-bolder');
     } else {
