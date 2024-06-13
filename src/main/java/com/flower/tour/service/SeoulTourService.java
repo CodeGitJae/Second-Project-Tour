@@ -23,7 +23,8 @@ public class SeoulTourService {
 	@Value("${apikey.tourArea}")
 	private String serviceKey;
 	
-	public List<Map<String, Object>> makeAreaInfo (int areaCode, int contentTypeId, int contentId) throws JsonMappingException, JsonProcessingException, URISyntaxException{
+	// 관광지 contentId 값에 따라 공통 정보 가져오기
+	public List<Map<String, Object>> getDetailCommonByContentid (int contentTypeId, int contentId) throws JsonMappingException, JsonProcessingException, URISyntaxException{
 		String link = "https://apis.data.go.kr/B551011/KorService1/detailCommon1";
 		String MobileOS = "ETC";
 		String MobileApp = "TEST";
@@ -36,7 +37,7 @@ public class SeoulTourService {
 		    "&_type=" + _type + 
 		    "&contentId=" + contentId +
 		    "&contentTypeId=" + contentTypeId +
-		    ""+ info +
+		     info +
 		    "&serviceKey=" + serviceKey;
 		
 		URI uri = new URI(url);
@@ -51,26 +52,26 @@ public class SeoulTourService {
 		JsonNode root = objectMapper.readTree(response);
 		JsonNode items = root.path("response").path("body").path("items").path("item");
 //		System.out.println("items: "+items);
-		List<Map<String, Object>> getContentId = new ArrayList<>();
+		List<Map<String, Object>> getDetailItem = new ArrayList<>();
 		
 		if(items.isArray()) {
 			for(JsonNode item : items) {
 				if(item.has("contentid")) {
-					Map<String, Object> contentIdMap = new HashMap<>();
-					contentIdMap.put("title", item.get("title").asText());
-					contentIdMap.put("tel", item.get("tel").asText());
-					contentIdMap.put("homepage", item.get("homepage").asText());
-					contentIdMap.put("firstimage", item.get("firstimage").asText());
-					contentIdMap.put("addr1", item.get("addr1").asText());
-					contentIdMap.put("lon", item.get("mapx").asText());
-					contentIdMap.put("lat", item.get("mapy").asText());
-					contentIdMap.put("overview", item.get("overview").asText());
-					getContentId.add(contentIdMap);
+					Map<String, Object> itemsByContentid = new HashMap<>();
+					itemsByContentid.put("title", item.get("title").asText());
+//					itemsByContentid.put("tel", item.get("tel").asText());
+					itemsByContentid.put("homepage", item.get("homepage").asText());
+					itemsByContentid.put("firstimage", item.get("firstimage").asText());
+					itemsByContentid.put("addr1", item.get("addr1").asText());
+					itemsByContentid.put("lon", item.get("mapx").asText());
+					itemsByContentid.put("lat", item.get("mapy").asText());
+					itemsByContentid.put("overview", item.get("overview").asText());
+					getDetailItem.add(itemsByContentid);
 				}
 			}
 		}
 //		System.out.println(getContentId);
-		return getContentId;
+		return getDetailItem;
 	}
 	
 	
@@ -168,7 +169,7 @@ public class SeoulTourService {
 	}
 	
 	// 지역 기반 관광 정보 조회 API 데이터 받아오기
-	public List<Map<String, Object>> getAreaData(int areaCode, int contentTypeId,
+	public List<Map<String, Object>> getAllDataByAreaBased(int areaCode, int contentTypeId,
 				int numOfRows, int pageNo, int sigunguCode) throws URISyntaxException, JsonProcessingException {
 		
 		String link = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
@@ -205,11 +206,13 @@ public class SeoulTourService {
 		
 		List<Map<String, Object>> filteredItems = new ArrayList<>();
 		if(items.isArray()) {
-		for(JsonNode item : items) {
-											//주소와 사진 필드(key)가 있는지 확인 그리고 사진에 값이 있으면 조건 True
-			if(item.has("addr1") && item.has("firstimage")) { 
+		for(JsonNode item : items) { 
+			//주소와 컨텐트아이디 필드(key)가 있는지 확인
+			if(item.has("addr1") && item.has("contentid")) { 
 				Map<String, Object> itemMap= objectMapper.convertValue(item, Map.class);
 				filteredItems.add(itemMap);
+				
+				
 			}
 		}
 	}

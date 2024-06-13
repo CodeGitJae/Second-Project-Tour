@@ -34,7 +34,7 @@ public class SeoulTourController {
 		// 컨텐트아이디 int 타입으로 parsing
 		int contentId = Integer.parseInt(defaultContentId);
 		
-		List<Map<String, Object>> getAreaDetail = stService.makeAreaInfo(areaCode, contentTypeId, contentId);
+		List<Map<String, Object>> getAreaDetail = stService.getDetailCommonByContentid(contentTypeId, contentId);
 //		System.out.println(getAreaDetail);
 		model.addAttribute("detailData", getAreaDetail);
 		
@@ -46,7 +46,7 @@ public class SeoulTourController {
 	public List<Map<String, Object>> getSelectedBySeoul()
 										throws URISyntaxException, JsonProcessingException{		
 //		List<Map<String, Object>> sigunguCode = stService.getAreaCode(25, 1, 1);
-     	List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, 1, 0);
+     	List<Map<String, Object>> tourData = stService.getAllDataByAreaBased(areaCode, contentTypeId, numOfRows, 1, 0);
     		
     	return tourData;
     	
@@ -66,7 +66,7 @@ public class SeoulTourController {
 										throws URISyntaxException, JsonProcessingException{		
 
 		// 해당 지역 코드를 기반으로 해당 지역의 관광 정보 조회
-		List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, page, sigunguCode);
+		List<Map<String, Object>> tourData = stService.getAllDataByAreaBased(areaCode, contentTypeId, numOfRows, page, sigunguCode);
 		List<Map<String, Object>> totalCountList = stService.getTotalCount(areaCode, contentTypeId, numOfRows, page, sigunguCode);
     	
 		// 전체 객체수 갖져오기
@@ -88,7 +88,7 @@ public class SeoulTourController {
     public String getAllTourData(@RequestParam(value = "page", defaultValue = "1") int page, Model model) 
                               throws URISyntaxException, JsonProcessingException {
     	List<Map<String, Object>> sigunguCode = stService.getAreaCode(25, 1, 1);
-    	List<Map<String, Object>> tourData = stService.getAreaData(areaCode, contentTypeId, numOfRows, page, 0);
+    	List<Map<String, Object>> tourData = stService.getAllDataByAreaBased(areaCode, contentTypeId, numOfRows, page, 0);
     	List<Map<String, Object>> totalCountList = stService.getTotalCount(areaCode, contentTypeId, numOfRows, page, 0);
 //    	 System.out.println(tourData);
     	// 전체 객체수 갖져오기

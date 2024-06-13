@@ -3,6 +3,7 @@
 
 <%@ include file="../components/header.jsp" %>
 
+<link href="${pageContext.request.contextPath}/assets/css/areaStyle.css" rel="stylesheet" type="text/css">
 <main id="main">
 
   <!-- ======= Our Services Section ======= -->
@@ -123,6 +124,8 @@
 <script>
 $(document).ready(function(){
 
+	
+	
 	let siName = '';
 	
 	$(".sigunguBtn").click(function(){

@@ -43,7 +43,6 @@
     const weatherApikey = '<%= weatherApikey %>';
   </script>
   <script src="${pageContext.request.contextPath}/assets/js/weather.js"></script>
-  <link href="${pageContext.request.contextPath}/assets/css/areaStyle.css" rel="stylesheet" type="text/css">
   
 
 
@@ -72,7 +71,7 @@
         <ul>
           <li><a class="active " href="/">Home</a></li>
           <li><a href="/Seoul/area">지역</a></li>
-          <li><a href="">여행지</a></li>
+          <li><a href="/category/travel">여행지</a></li>
           <li><a href="">맛집</a></li>
           <li><a href="">축제</a></li>
           <li><a href="">여행정보</a></li>

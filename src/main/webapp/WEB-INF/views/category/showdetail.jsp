@@ -32,7 +32,7 @@
 	  	  <div class="card-body">
 		    <h5 class="card-title">장소명 [${item.title}]</h5>
 		    <p class="card-text">${item.overview}</p>
-<%-- 		    <p class="card-sec-text">전화번호 | ${item.tel}</p>   전화번호 정보가 있는 경우가 거의 없어서 삭제함.--%>
+		    <p class="card-sec-text">전화번호 | ${item.tel}</p>  
    		    <p class="card-sec-text">주소지　| ${item.addr1}</p>
    		    <p class="card-sec-text">홈페이지 | ${item.homepage}</p>
 		    <button class="btn btn-primary" id="goBackBtn" >뒤로가기</button>
