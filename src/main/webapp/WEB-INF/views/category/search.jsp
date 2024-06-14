@@ -27,20 +27,20 @@
  		<div class="mt-3" style="margin-left: 160px;">
  			<form action="/category/search" method="get">
 			    <label for="search" class="form-label"></label>
-   			    <input type="hidden" name="contentTypeId" value="${recommendTour[0].contenttypeid}">
+			    <input type="hidden" name="contentTypeId" value="${searchKeyword[0].contenttypeid}">  <!-- 인덱스 0번째는 읽어오는 객체 숫자의 인덱스 번호임 -->
 			    <input style="width: 20%; height: 40px;" id="search" name="search" placeholder="검색어를 입력하세요.">
 			     <button type="submit" class="btn btn-primary">검색</button>
 	  		</form>
 	  	</div>
 	  <div class="article-list-slide mt-4">   <!-- 카테고리 항목 클릭하면 서울 관광지 보여주는 div -->
 	    <ul class="article-list">
-	        <c:forEach var="item" items="${recommendTour}">
+	        <c:forEach var="item" items="${searchKeyword}">
 	        	<c:choose>
 		        	<c:when test="${empty item.firstimage}">
 			            <li class="article-item">
 			            	<div class="items">
 				                <div class="image-box">
-		                           <a href="/category/showdetail?contentTypeId=${item.contenttypeid}&contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
+		                           <a href="/category/searchdetail?search=${keyword}&contentTypeId=${item.contenttypeid}&contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
 		                            <img src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
 				                   </a>
 				                </div>
@@ -55,7 +55,7 @@
 			             <li class="article-item">
 				            	<div class="items">
 					                <div class="image-box">
-					                  <a href="/category/showdetail?contentTypeId=${item.contenttypeid}&contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
+					                  <a href="/category/searchdetail?search=${keyword}&contentTypeId=${item.contenttypeid}&contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
 			                            <img src="${item.firstimage}" alt="${item.title}">
 					                  </a>
 					                </div>
@@ -74,15 +74,15 @@
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
-    		    <a class="page-link" href="/category/travel?contentTypeId=${recommendTour[0].contenttypeid}&page=1" aria-label="Previous">
+    		    <a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=1" aria-label="Previous">
 			      <span aria-hidden="true">&laquo;</span>
 		        </a>
 		    <c:choose>
 		    	<c:when test="${curPage - 5 < 1}">
-			      <li class="page-item"><a class="page-link" href="/category/travel?contentTypeId=${recommendTour[0].contenttypeid}&page=1">이전</a></li>
+			      <li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=1">이전</a></li>
 		      	</c:when>
 		      	<c:otherwise>
-		      		<li class="page-item"><a class="page-link" href="/category/travel?contentTypeId=${recommendTour[0].contenttypeid}&page=${curPage - 5}">이전</a></li>
+		      		<li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${curPage - 5}">이전</a></li>
 		      	</c:otherwise>
 	      	</c:choose>
 		    </li>
@@ -98,19 +98,19 @@
 
 		    <c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
 				<li class="page-item ${pageNum == curPage ? 'active' : ''}">
-					<a class="page-link" href="/category/travel?contentTypeId=${recommendTour[0].contenttypeid}&page=${pageNum}">${pageNum}</a>
+					<a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${pageNum}">${pageNum}</a>
 				</li>
 			</c:forEach>
 			<c:choose>
 				<c:when test="${curPage + 5 >= totalPages}">
-					<li class="page-item"><a class="page-link" href="/category/travel?contentTypeId=${recommendTour[0].contenttypeid}&page=${totalPages}">다음</a></li>
+					<li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${totalPages}">다음</a></li>
 			    </c:when>
 			    <c:otherwise>
-			    	<li class="page-item"><a class="page-link" href="/category/travel?contentTypeId=${recommendTour[0].contenttypeid}&page=${curPage + 5}">다음</a></li>
+			    	<li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${curPage + 5}">다음</a></li>
 			    </c:otherwise>
 	    	</c:choose>
     	   	 <li class="page-item">
-		      <a class="page-link" href="/category/travel?contentTypeId=${recommendTour[0].contenttypeid}&page=${totalPages}" aria-label="Next">
+		      <a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${totalPages}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
 		    </li>
@@ -125,6 +125,7 @@
 <%@ include file="../components/footer.jsp" %>
 
 <script>
-$(document).ready(function(){
-
+//$(document).ready(function(){
+const contentType = `${searchKeyword}`;
+console.log(contentType);
 </script>

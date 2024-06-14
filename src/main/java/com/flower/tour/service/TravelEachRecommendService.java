@@ -45,7 +45,7 @@ public class TravelEachRecommendService {
 		    "&serviceKey=" + serviceKey;
 		
 		URI uri = new URI(url);
-		
+		System.out.println(uri);
 		RestTemplate restTemplate = new RestTemplate();
 		String response = restTemplate.getForObject(uri, String.class);
 		
@@ -55,7 +55,8 @@ public class TravelEachRecommendService {
 		List<Map<String, Object>> searchingItems = new ArrayList<>();
 		
 		JsonNode root = objectMapper.readTree(response);
-		JsonNode items = root.path("response").path("body").path("items").path("item");
+		JsonNode body = root.path("response").path("body");
+		JsonNode items = body.path("items").path("item");
 
 		// 페이지 구성할 객체를 리스트에 추가
 		if(items.isArray()) {
@@ -74,6 +75,13 @@ public class TravelEachRecommendService {
 				searchingItems.add(searchMap);
 				}	
 			}
+		}
+		// pagination 을 위한 객체를 리스트에 추가
+		Map<String, Object> searchPage = new HashMap<>();
+		if(body.has("totalCount") && body.has("numOfRows")) {
+			searchPage.put("totalCount", body.get("totalCount").asText());
+			searchPage.put("numOfRows", body.get("numOfRows").asText());
+			searchingItems.add(searchPage);
 		}
 //				System.out.println(filteredItems);
 		return searchingItems;
