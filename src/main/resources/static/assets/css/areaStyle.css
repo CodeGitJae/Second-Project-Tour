@@ -3,9 +3,20 @@
     flex-wrap: wrap;
 }
 .citys button {
-	padding: 10px;
-	margin: 2px;
+    padding: 10px;
+    margin: 2px;
     margin-bottom: 10px;
+    /* btn-secondary 클래스 추가 */
+    background-color: #004466;
+    color: #fff;
+    border: 1px solid #004466;
+}
+
+.citys button:hover {
+    /* 버튼에 호버 효과 설정 */
+    background-color: #003355;
+    border-color: #003355;
+    color: #fff;
 }
     
 .article-list {

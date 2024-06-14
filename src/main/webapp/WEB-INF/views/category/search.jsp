@@ -125,7 +125,13 @@
 <%@ include file="../components/footer.jsp" %>
 
 <script>
-//$(document).ready(function(){
-const contentType = `${searchKeyword}`;
-console.log(contentType);
+/* 객체에 데이터가 있는지 확인하는 콘솔로그 */
+/* const contentType = `${searchKeyword}`;
+console.log(contentType); */
+/* $(document).ready(function(){
+	
+
+	
+	
+} */
 </script>

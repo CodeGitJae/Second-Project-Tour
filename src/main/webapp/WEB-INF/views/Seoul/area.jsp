@@ -22,9 +22,9 @@
  <div class="container" style="height:800px">   
   	  <h1 class="showGu">서울 지역 관광 정보 [서울]</h1>
    <div class="citys">    <!--  서울 지역 포함한 전체 구 지역 버튼 생성 -->
-   			<button type="button" class="showAllSigunguBtn" data-sigungu="0">서울</button>
+   			<button type="button" class="showAllSigunguBtn btn-secondary" data-sigungu="0">서울</button>
     <c:forEach var="sigunguInfo" items="${sigunguCode}">
-    	 	<button type="button" class="sigunguBtn" data-sigungu="${sigunguInfo.code}">${sigunguInfo.name}</button>
+    	 	<button type="button" class="sigunguBtn btn-secondary" data-sigungu="${sigunguInfo.code}">${sigunguInfo.name}</button>
     </c:forEach>
    </div> 
 	  <div class="article-list-slide mt-4">   <!-- 지역 버튼 클릭하면 서울 관광지 보여주는 div -->
@@ -83,6 +83,8 @@
 		    </li>
 		    <c:set var="startPage" value="${curPage - (curPage % 5 == 0 ? 4 : (curPage % 5 - 1))}" />
 		    	<c:if test="${startPage < 1}">
+		    	
+		    	
                     <c:set var="startPage" value="1" />
               	</c:if>
 	        <c:set var="endPage" value="${startPage + 4}" />

@@ -45,8 +45,7 @@ public class TravelEachRecommendController {
 									@RequestParam(value = "contentTypeId", defaultValue = "14") int contentTypeId, Model model) 
 									throws JsonProcessingException, URISyntaxException, UnsupportedEncodingException{
 		
-		System.out.println(contentTypeId);
-		// 한글 검색어 URL 인코딩
+		// 한글 검색어 URL 인코딩 (문자열을 인코딩안하면 서비스 키 오류가 발생함)
 	    String keyword = URLEncoder.encode(defaultKeyword, StandardCharsets.UTF_8.toString());
 		
 	    // 서비스에서 호출한 API 메서드 사용
