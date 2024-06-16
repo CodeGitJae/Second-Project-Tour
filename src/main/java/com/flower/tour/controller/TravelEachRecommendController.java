@@ -20,7 +20,7 @@ public class TravelEachRecommendController {
 
 	@Autowired
 	private TravelEachRecommendService terService;
-	// 한 페이지당 4페이지만 출력
+	// 한 페이지당 출력 결과 4개로 설정
 	private final int numOfRows = 4;
 	
 	@GetMapping("/category/searchdetail")

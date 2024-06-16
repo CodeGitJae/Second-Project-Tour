@@ -18,7 +18,7 @@
 
     </div>
   </section><!-- End Our Services Section -->
-
+	
  <div class="container" style="height:800px">   
   	  <h1 class="showGu">서울 지역 관광 정보 [서울]</h1>
    <div class="citys">    <!--  서울 지역 포함한 전체 구 지역 버튼 생성 -->
@@ -35,12 +35,12 @@
 			            <li class="article-item">
 			            	<div class="items">
 				                <div class="image-box">
-		                           <a href="/Seoul/showdetail?contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
-		                            <img src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
+		                           <a class="getItem" href="/Seoul/showdetail?contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
+		                            <img class="img" src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
 				                   </a>
 				                </div>
 				                <div class="text-box">
-				                    <h3>${item.title}</h3>
+				                    <h3 class="title">${item.title}</h3>
 				                    <p>${item.addr1}</p>
 				                </div>
 			                </div>
@@ -50,12 +50,12 @@
 			             <li class="article-item">
 				            	<div class="items">
 					                <div class="image-box">
-					                  <a href="/Seoul/showdetail?contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
-			                            <img src="${item.firstimage}" alt="${item.title}">
+					                  <a class="getItem" href="/Seoul/showdetail?contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
+			                            <img class="img" src="${item.firstimage}" alt="${item.title}">
 					                  </a>
 					                </div>
 					                <div class="text-box">
-					                    <h3>${item.title}</h3>
+					                    <h3 class="title">${item.title}</h3>
 					                    <p>${item.addr1}</p>
 					                </div>
 				                </div>
@@ -115,7 +115,14 @@
 		</nav>
 	</div>
 </div>
-    
+
+<div id="pastItemMenu">
+  <h2 class="pastMenu">최근에 본 게시물</h2>
+  <div class="showItemList">
+  </div>
+    <button class="clearBtn" onclick="deleteItemAll()">모두 지우기</button>
+</div>
+
 </main>
 
     
@@ -123,11 +130,10 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/filteredItems.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/filteredPaging.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/localstorageSave.js"></script>
 <script>
 $(document).ready(function(){
 
-	
-	
 	let siName = '';
 	
 	$(".sigunguBtn").click(function(){
