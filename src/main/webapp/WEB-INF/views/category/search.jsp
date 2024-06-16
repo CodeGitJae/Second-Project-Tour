@@ -40,12 +40,12 @@
 			            <li class="article-item">
 			            	<div class="items">
 				                <div class="image-box">
-		                           <a class="getItem" href="/category/searchdetail?search=${keyword}&contentTypeId=${item.contenttypeid}&contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
-		                            <img class="img" src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
+		                           <a href="/category/searchdetail?search=${keyword}&contentTypeId=${item.contenttypeid}&contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
+		                            <img src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
 				                   </a>
 				                </div>
 				                <div class="text-box">
-				                    <h3 class="title">${item.title}</h3>
+				                    <h3>${item.title}</h3>
 				                    <p>${item.addr1}</p>
 				                </div>
 			                </div>
@@ -55,12 +55,12 @@
 			             <li class="article-item">
 				            	<div class="items">
 					                <div class="image-box">
-					                  <a class="getItem" href="/category/searchdetail?search=${keyword}&contentTypeId=${item.contenttypeid}&contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
-			                            <img class="img" src="${item.firstimage}" alt="${item.title}">
+					                  <a href="/category/searchdetail?search=${keyword}&contentTypeId=${item.contenttypeid}&contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
+			                            <img src="${item.firstimage}" alt="${item.title}">
 					                  </a>
 					                </div>
 					                <div class="text-box">
-					                    <h3 class="title">${item.title}</h3>
+					                    <h3>${item.title}</h3>
 					                    <p>${item.addr1}</p>
 					                </div>
 				                </div>
@@ -121,15 +121,8 @@
     
 </main>
 
-<div id="pastItemMenu">
-  <h4 class="pastMenu">최근에 본 게시물</h4>
-  <div class="showItemList"></div>
-  <button class="clearBtn" onclick="deleteItemAll()">모두 지우기</button>
-</div>
-
     
 <%@ include file="../components/footer.jsp" %>
-<script src="${pageContext.request.contextPath}/assets/js/localstorageSaveForTravel.js"></script>
 
 <script>
 /* 객체에 데이터가 있는지 확인하는 콘솔로그 */
@@ -138,5 +131,7 @@ console.log(contentType); */
 /* $(document).ready(function(){
 	
 
+	
+	
 } */
 </script>

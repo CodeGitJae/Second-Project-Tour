@@ -33,7 +33,7 @@ $(document).ready(function(){
 
 
  // 게시글 정보 전처리 및 localStorage에 추가
-$("body").on("click", ".getItem", function(e){
+$(".getItem").on("click", function(e){
 //	e.preventDefault();
 	
 	// a태그 hrf 속성 가져오기
@@ -100,7 +100,6 @@ $("body").on("click", ".getItem", function(e){
 	   
 // });
 	
-	console.log("result:", itemList[0].contentid);
     // View 메서드 호출
 	updateItemForView(itemList);
  
@@ -124,28 +123,20 @@ function loadStorageItem(){
 
 // 내가 본 게시물 추가를 위한 view 메서드 생성
 function updateItemForView(itemList){
-	
 		if(itemList.length != 0){
 		/* history가 있을 경우 .none_noti.hide(), .noti.show(); */
-		$('#pastItemMenu').show();
+		$('.showItemList').show();
+		$('.none_noti').hide();
 		
 		// '|' split 하기
 		var tagList = [];
 		for (item in itemList){
 			var pastViewArray = itemList[item]
-//			console.log("::::::::::::",Object.keys(pastViewArray).length);
-			if(Object.keys(pastViewArray).length === 3){
 //			console.log("result :",pastViewArray);
 			var tag = `<li><a class="getItem" href="/Seoul/showdetail?contentId=${pastViewArray.cententid}">
-						<img style="width: 190px; height: 130px; margin: 10px;"
+						<img style="width: 235px; height: 150px; margin-bottom: 10px;"
 						src="${pastViewArray.img}" alt="${pastViewArray.title}"></a></li>
 						<li>${pastViewArray.title}</li>`;
-			} else{
-			var tag = `<li><a class="getItem" href="/category/searchdetail?search=${pastViewArray.keyword}&contentTypeId=${pastViewArray.contenttypeid}&contentId=${pastViewArray.cententid}">
-						<img style="width: 190px; height: 130px; margin: 10px;"
-						src="${pastViewArray.img}" alt="${pastViewArray.title}"></a></li>
-						<li>${pastViewArray.title}</li>`;
-			}
 			tagList.push(tag);
 			
 //			var strArray = itemList[item];
@@ -156,7 +147,7 @@ function updateItemForView(itemList){
 		
 		} else {
 			/* history가 없을 경우 .none_noti.show(), .noti.hide(); */
-			$('#pastItemMenu').hide();
+			$('.none_noti').show();
 	//		$('.itemsContent').hide(); // 이 줄을 추가하여 .noti를 숨깁니다.
 		}
 }
