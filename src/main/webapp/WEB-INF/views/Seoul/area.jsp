@@ -18,7 +18,17 @@
 
     </div>
   </section><!-- End Our Services Section -->
+<!--  리모컨 생성 시작-->
+<div class="quickmenu">
+  <ul>
+    <li><a href="#">등급별혜택</a></li>
+    <li><a href="#">1:1문의</a></li>
+    <li><a href="#">후기</a></li>
+  </ul>
+</div>
+<!--  리모컨 끝-->
 
+<!-- 페이지 본문 시작 -->
  <div class="container" style="height:800px">   
   	  <h1 class="showGu">서울 지역 관광 정보 [서울]</h1>
    <div class="citys">    <!--  서울 지역 포함한 전체 구 지역 버튼 생성 -->
@@ -35,7 +45,7 @@
 			            <li class="article-item">
 			            	<div class="items">
 				                <div class="image-box">
-		                           <a href="/Seoul/showdetail?contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
+		                           <a class="clickitem" href="/Seoul/showdetail?contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
 		                            <img src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
 				                   </a>
 				                </div>
@@ -50,7 +60,7 @@
 			             <li class="article-item">
 				            	<div class="items">
 					                <div class="image-box">
-					                  <a href="/Seoul/showdetail?contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
+					                  <a class="clickitem" href="/Seoul/showdetail?contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
 			                            <img src="${item.firstimage}" alt="${item.title}">
 					                  </a>
 					                </div>
@@ -65,6 +75,9 @@
 	        </c:forEach>
 		</ul>
 	</div>
+	<!-- 페이지 본문 끝-->
+	
+	<!-- 서울 페이지 처리 (시군구는 ajax로 처리함) -->
 	<div class="pagination">      <!-- 서울 지역 페이지 네이션 구현 / 지역벌 페이지는 ajax로 구현함-->
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
@@ -114,8 +127,11 @@
 		  </ul>
 		</nav>
 	</div>
+	<!-- 서울 페이지 처리 끝) -->
 </div>
-    
+<!--  본문 페이지 끝 class container end --> -->
+
+
 </main>
 
     
@@ -123,11 +139,18 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/filteredItems.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/filteredPaging.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/localstorageSave.js"></script>
 <script>
 $(document).ready(function(){
 
+	// 리모컨 생성
+	var currentPosition = parseInt($(".quickmenu").css("top"));
+	  $(window).scroll(function() {
+	    var position = $(window).scrollTop(); 
+	    $(".quickmenu").stop().animate({"top":position+currentPosition+"px"},400);
+	  });
 	
-	
+	// 시군구 버튼 클릭 시 선택된 도시 이름 가져오기
 	let siName = '';
 	
 	$(".sigunguBtn").click(function(){
