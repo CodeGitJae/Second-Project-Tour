@@ -1,0 +1,247 @@
+/*--------------------------------------------------------------
+# 헤더
+--------------------------------------------------------------*/
+/* 전체 섹션 스타일 */
+.ftv-breadcrumbs {
+    background-color: #f8f9fa; /* 배경색 설정 */
+    padding: 20px 0; /* 위아래로 패딩 설정 */
+}
+
+/* 컨테이너 스타일 */
+.ftv-container {
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    padding: 0 20px; /* 좌우 패딩 설정 */
+}
+
+/* 헤더 스타일 */
+.ftv-header {
+    text-align: center; /* 가운데 정렬 */
+}
+
+/* 헤더 제목 스타일 */
+.ftv-header h2 {
+    font-size: 2rem; /* 글자 크기 설정 */
+    color: #333; /* 글자 색상 설정 */
+    margin-bottom: 10px; /* 아래 여백 설정 */
+}
+
+/*--------------------------------------------------------------
+# 셀렉트박스
+--------------------------------------------------------------*/
+.select_Month {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    margin: 10px 0;
+}
+
+.select_Month select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    appearance: none; /* Removes default arrow */
+    -webkit-appearance: none; /* For Chrome */
+    -moz-appearance: none; /* For Firefox */
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.select_Month select:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.select_Month::after {
+    content: '\25BC'; /* Unicode character for down arrow */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #666;
+}
+
+/* Optional: Add focus effect */
+.select_Month select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+
+/*--------------------------------------------------------------
+# 버튼
+--------------------------------------------------------------*/
+
+.btn_box {
+    display: inline-block;
+    margin: 20px 0;
+}
+
+.btn_box .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn_box .btn:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    background-color: #e0e0e0;
+}
+
+.btn_box .btn:active {
+    background-color: #d0d0d0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn_box .btn span {
+    display: block;
+    color: inherit;
+    font-weight: bold;
+}
+
+.btn_box .btn.gray {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+}
+
+.btn_box .btn.gray:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn_box .btn.gray:active {
+    background-color: #1c7430;
+    border-color: #1a682c;
+}
+
+/*--------------------------------------------------------------
+# 아이템박스
+--------------------------------------------------------------*/
+.search_box_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.item {
+    width: 100px; /* 고정된 폭 */
+    height: 100px; /* 고정된 높이 */
+    background-color: lightblue; /* 배경색 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc; /* 경계선 */
+    transition: box-shadow 0.3s ease; /* 호버 시 부드럽게 변화 */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 기본적인 그림자 설정 */
+}
+
+.item:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 변경 */
+}
+
+
+.ftv-list-slide {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* 요소 간의 간격 조절 */
+}
+
+.ftv-list-slide .ftv-item {
+    width: calc(35% - 10px); /* 4개씩 정렬하기 위한 폭 조절 (간격을 고려하여 조정) */
+    box-sizing: border-box;
+}
+
+.ftvItem {
+    width: 18rem;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ftv-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ftv-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.ftv-details {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.ftv-details strong {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.ftv-info, .ftv-date {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.ftv-date {
+    margin-top: 5px;
+}
+
+.ftv.btn-primary {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 8px; /* 원래 크기의 반으로 줄임 */
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-size: 11px;
+    width: 25%; /* 너비를 50%로 설정 */
+    height: 50%; /* 높이를 50%로 설정 */
+}
+
+
+.ftv.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+
+.ftv-img {
+	width: 100%;
+	height: 200px; /* 고정된 높이 설정 */
+	/* object-fit: cover; 이미지 비율을 유지하며 잘림 */
+}
+
+.ftv-body {
+	padding: 10px;
+}
+
+.ftv-info, .ftv-date {
+	font-size: 0.8rem;
+}
+
+.ftv-info {
+	margin-top: 

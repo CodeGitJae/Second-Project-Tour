@@ -12,6 +12,6 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
-      
+
   profiles:
     include: apikey
