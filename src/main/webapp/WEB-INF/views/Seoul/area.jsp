@@ -19,7 +19,7 @@
     </div>
   </section><!-- End Our Services Section -->
 	
- <div class="container" style="height:800px">   
+ <div class="container">   
   	  <h1 class="showGu">서울 지역 관광 정보 [서울]</h1>
    <div class="citys">    <!--  서울 지역 포함한 전체 구 지역 버튼 생성 -->
    			<button type="button" class="showAllSigunguBtn btn-secondary" data-sigungu="0">서울</button>
@@ -28,7 +28,7 @@
     </c:forEach>
    </div> 
 	  <div class="article-list-slide mt-4">   <!-- 지역 버튼 클릭하면 서울 관광지 보여주는 div -->
-	    <ul class="article-list">
+	    <ul class="article-list d-flex align-content-around flex-wrap">
 	        <c:forEach var="item" items="${tourData}">
 	        	<c:choose>
 		        	<c:when test="${empty item.firstimage}">
@@ -121,9 +121,8 @@
 </div>
 
 <div id="pastItemMenu">
-  <h2 class="pastMenu">최근에 본 게시물</h2>
-  <div class="showItemList">
-  </div>
+  <h4 class="pastMenu">최근에 본 게시물</h4>
+  <div class="showItemList"></div>
     <button class="clearBtn" onclick="deleteItemAll()">모두 지우기</button>
 </div>
 
@@ -134,7 +133,7 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/filteredItems.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/filteredPaging.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/localstorageSave.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/localstorageSaveForArea.js"></script>
 <script>
 $(document).ready(function(){
 
