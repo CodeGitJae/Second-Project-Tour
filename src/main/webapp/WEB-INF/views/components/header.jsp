@@ -70,8 +70,8 @@
           <li><a class="active " href="/">Home</a></li>
           <li><a href="">지역</a></li>
           <li><a href="">여행지</a></li>
-          <li><a href="/Restaurant/area">맛집</a></li>
-          <li><a href="">축제</a></li>
+          <li><a href="/restaurant/area">맛집</a></li>
+          <li><a href="/festival/festivalMain">축제</a></li>
           <li><a href="">여행정보</a></li>
         </ul>
       </nav><!-- .navbar -->
