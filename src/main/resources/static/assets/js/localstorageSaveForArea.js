@@ -1,8 +1,3 @@
-let	img = $(".article-item").find("img").attr("src");
-let	title= $(".article-item").find("h3").text();
-localStorage.setItem('items', img);
-localStorage.setItem('items', title);
-console.log(img, title);
 $(document).ready(function(){
 	// 로컬 스토리지 초기화
 	// item이 JSON 형태의 문자열로 담길 수 있게 초기화 시 배열로 설정
@@ -38,7 +33,7 @@ $(document).ready(function(){
 
 
  // 게시글 정보 전처리 및 localStorage에 추가
-$(".getItem").on("click", function(e){
+$("body").on("click", ".getItem", function(e){
 //	e.preventDefault();
 	
 	// a태그 hrf 속성 가져오기
@@ -105,6 +100,7 @@ $(".getItem").on("click", function(e){
 	   
 // });
 	
+	console.log("result:", itemList[0].contentid);
     // View 메서드 호출
 	updateItemForView(itemList);
  
@@ -128,20 +124,28 @@ function loadStorageItem(){
 
 // 내가 본 게시물 추가를 위한 view 메서드 생성
 function updateItemForView(itemList){
+	
 		if(itemList.length != 0){
 		/* history가 있을 경우 .none_noti.hide(), .noti.show(); */
-		$('.showItemList').show();
-		$('.none_noti').hide();
+		$('#pastItemMenu').show();
 		
 		// '|' split 하기
 		var tagList = [];
 		for (item in itemList){
 			var pastViewArray = itemList[item]
+//			console.log("::::::::::::",Object.keys(pastViewArray).length);
+			if(Object.keys(pastViewArray).length === 3){
 //			console.log("result :",pastViewArray);
 			var tag = `<li><a class="getItem" href="/Seoul/showdetail?contentId=${pastViewArray.cententid}">
-						<img style="width: 235px; height: 150px; margin-bottom: 10px;"
+						<img style="width: 190px; height: 130px; margin: 10px;"
 						src="${pastViewArray.img}" alt="${pastViewArray.title}"></a></li>
 						<li>${pastViewArray.title}</li>`;
+			} else{
+			var tag = `<li><a class="getItem" href="/category/searchdetail?search=${pastViewArray.keyword}&contentTypeId=${pastViewArray.contenttypeid}&contentId=${pastViewArray.cententid}">
+						<img style="width: 190px; height: 130px; margin: 10px;"
+						src="${pastViewArray.img}" alt="${pastViewArray.title}"></a></li>
+						<li>${pastViewArray.title}</li>`;
+			}
 			tagList.push(tag);
 			
 //			var strArray = itemList[item];
@@ -152,7 +156,7 @@ function updateItemForView(itemList){
 		
 		} else {
 			/* history가 없을 경우 .none_noti.show(), .noti.hide(); */
-			$('.none_noti').show();
+			$('#pastItemMenu').hide();
 	//		$('.itemsContent').hide(); // 이 줄을 추가하여 .noti를 숨깁니다.
 		}
 }

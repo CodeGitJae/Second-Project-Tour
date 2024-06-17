@@ -28,7 +28,7 @@
 			<form action="/category/search" method="get">
 				<label for="search" class="form-label"></label> <input type="hidden"
 					name="contentTypeId" value="${recommendTour[0].contenttypeid}">
-				<input style="width: 20%; height: 40px;" id="search" name="search"
+				<input style="min-width: 20%; height: 40px;" id="search" name="search"
 					placeholder="검색어를 입력하세요.">
 				<button type="submit" class="btn btn-primary">검색</button>
 			</form>
@@ -42,15 +42,13 @@
 							<li class="article-item">
 								<div class="items">
 									<div class="image-box">
-										<a
-											href="/category/showdetail?contentTypeId=${item.contenttypeid}&contentId=${item.contentid}">
-											<!-- 클릭 시 상세보기로 이동 --> <img
-											src="${pageContext.request.contextPath}/assets/img/preparingforimage.png"
-											alt="${item.title}">
+										<a class="getItem" href="/category/showdetail?contentTypeId=${item.contenttypeid}&contentId=${item.contentid}">
+											<!-- 클릭 시 상세보기로 이동 --> 
+											<img class="img" src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
 										</a>
 									</div>
 									<div class="text-box">
-										<h3>${item.title}</h3>
+										<h3 class="title">${item.title}</h3>
 										<p>${item.addr1}</p>
 									</div>
 								</div>
@@ -60,14 +58,13 @@
 							<li class="article-item">
 								<div class="items">
 									<div class="image-box">
-										<a
-											href="/category/showdetail?contentTypeId=${item.contenttypeid}&contentId=${item.contentid}">
-											<!-- 클릭 시 상세보기로 이동 --> <img src="${item.firstimage}"
-											alt="${item.title}">
+										<a class="getItem" href="/category/showdetail?contentTypeId=${item.contenttypeid}&contentId=${item.contentid}">
+											<!-- 클릭 시 상세보기로 이동 --> 
+											<img class="img" src="${item.firstimage}" alt="${item.title}">
 										</a>
 									</div>
 									<div class="text-box">
-										<h3>${item.title}</h3>
+										<h3 class="title">${item.title}</h3>
 										<p>${item.addr1}</p>
 									</div>
 								</div>
@@ -133,11 +130,18 @@
 			</nav>
 		</div>
 	</div>
+	
+<div id="pastItemMenu">
+  <h4 class="pastMenu">최근에 본 게시물</h4>
+  <div class="showItemList"></div>
+  <button class="clearBtn" onclick="deleteItemAll()">모두 지우기</button>
+</div>
 
 </main>
 
     
 <%@ include file="../components/footer.jsp" %>
+<script src="${pageContext.request.contextPath}/assets/js/localstorageSaveForTravel.js"></script>
 
 <script>
 
