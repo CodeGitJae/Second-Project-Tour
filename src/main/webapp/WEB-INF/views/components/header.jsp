@@ -17,7 +17,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="${pageContext.request.contextPath}/assets/img/favicon.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
@@ -58,7 +58,8 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+  <header id="header" class="fixed-top align-items-center header-transparent">
+    <div id="google_translate_element" class="p-2 flex-end" style="height: 25px;"></div>
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
@@ -74,7 +75,7 @@
           <li><a href="/category/travel">여행지</a></li>
           <li><a href="/restaurant/area">맛집</a></li>
           <li><a href="/festival/festivalMain">축제</a></li>
-          <li><a href="">여행정보</a></li>
+          <li><a href="/info/traffic">여행정보</a></li>
         </ul>
       </nav><!-- .navbar -->
       
@@ -89,3 +90,14 @@
 
     </div>
   </header><!-- End Header -->
+<!-- Google Translate script -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+          pageLanguage: 'ko', // 원본 페이지 언어를 지정합니다.
+          includedLanguages: 'en,ja,zh-CN,es,fr,it', // 포함할 언어를 지정합니다.
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

@@ -23,31 +23,27 @@ public class RestaurantController {
 
 	@Autowired
 	private RestaurantService rtrService;
-
+	
 	// 메인
 	@GetMapping("/restaurant/area")
 	public String getTourData(Model model, @RequestParam(defaultValue = "1") int pageNo,
-			@RequestParam(defaultValue = "8") int pageSize) throws URISyntaxException, JsonProcessingException {
+			@RequestParam(defaultValue = "8") int pageSize,@RequestParam(defaultValue = "0") int guCode) throws URISyntaxException, JsonProcessingException {
 
-		List<Map<String, Object>> sigunguCode = rtrService.getRestaurantAreaCode(30, 1, 1);
+		List<Map<String, Object>> sigunguCode = rtrService.getSigunguCodeList();
 		List<Map<String, Object>> allrestaurantData = new ArrayList<>();
-
-		for (Map<String, Object> sigungu : sigunguCode) {
-			int outerRestaurantCode = Integer.parseInt(sigungu.get("code").toString());
-			String sigunguName = sigungu.get("name").toString();
-			List<Map<String, Object>> restaurantData = rtrService.getRestaurantData(1, "서울", 39, 20, 1,
-					outerRestaurantCode);
-
-			Map<String, Object> sigunguInfo = new HashMap<>();
-			sigunguInfo.put("sigunguCode", outerRestaurantCode);
-			sigunguInfo.put("sigunguName", sigunguName);
-			sigunguInfo.put("restaurantData", restaurantData);
-
-			allrestaurantData.add(sigunguInfo);
-		}
-		model.addAttribute("allrestaurantData", allrestaurantData);
+		
+		List<Map<String, Object>> restaurantData = rtrService.getRestaurantData(1, "서울", 39, 8, pageNo, guCode);
+		
+		String totalCount = (String) restaurantData.get(restaurantData.size()-1).get("totalCount");
+		int endPage = Integer.parseInt(totalCount) / 8 + 1;
+		restaurantData.remove(restaurantData.size()-1);
+		
+		model.addAttribute("restaurantData", restaurantData);
+		model.addAttribute("sigunguCode", sigunguCode);
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("guCode", guCode);
 		
 
 		return "restaurant/restaurant_main";
@@ -79,10 +75,10 @@ public class RestaurantController {
 	public String restaurantDetail(Model model, @RequestParam Integer contentid)
 			throws URISyntaxException, JsonProcessingException {
 
-		List<Map<String, Object>> restaurantInfoList = rtrService.restaurantInfo(1, 1, contentid);
+		List<Map<String, Object>> restaurantInfoList = rtrService.restaurantInfo(contentid);
 		System.out.println(contentid);
 		System.out.println(":::::::::restaurantInfoList:::::::::" + restaurantInfoList);
-		model.addAttribute("rtrInfoList", restaurantInfoList);
+		model.addAttribute("detailData", restaurantInfoList);
 
 		return "/restaurant/restaurant_detail";
 	}
