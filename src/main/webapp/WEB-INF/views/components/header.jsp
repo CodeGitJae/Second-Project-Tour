@@ -56,7 +56,8 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+  <header id="header" class="fixed-top align-items-center header-transparent">
+    <div id="google_translate_element" style="height: 40px;"></div>
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
@@ -87,3 +88,14 @@
 
     </div>
   </header><!-- End Header -->
+<!-- Google Translate script -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+          pageLanguage: 'ko', // 원본 페이지 언어를 지정합니다.
+          includedLanguages: 'en,ja,zh-CN,es,fr,it', // 포함할 언어를 지정합니다.
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
