@@ -57,7 +57,7 @@
 							<div class="ftv-info">${ftv.addr1}</div>
 							<div class="ftv-date">${ftv.eventstartdate}~
 								${ftv.eventenddate}</div>
-							<a class="ftv btn-primary" data-contentid="${ftv.contentid}">상세보기</a>
+							<a class="ftv btn btn-primary" data-contentid="${ftv.contentid}">상세보기</a>
 						</div>
 					</div>
 				</c:if>

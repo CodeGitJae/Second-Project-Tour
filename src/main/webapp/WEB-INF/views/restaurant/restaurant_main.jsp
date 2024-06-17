@@ -25,67 +25,55 @@
 	</section>
 	<!-- End Our Services Section -->
 
-	<div class="container" style="height: 800px">
+	<div class="container">
 		<h5>서울 지역 음식점 정보</h5>
 		
 		<!-- 도시별 태그버튼 -->
 		<div class="citys mb-4">
-			<button type="button" class=" btn btn-primary allsigunguBtn">전체</button>
-			<c:forEach var="sigunguInfo" items="${allrestaurantData}">
-				<button type="button" class="btn btn-outline-primary sigunguBtn"
-					data-sigungu="${sigunguInfo.sigunguCode}">${sigunguInfo.sigunguName}</button>
+			<button type="button" class=" btn btn-outline-primary allsigunguBtn ${guCode == 0 ? 'active' : ''}">전체</button>
+			<c:forEach var="sigunguInfo" items="${sigunguCode}" varStatus="status">
+				<button type="button" class="btn btn-outline-primary sigunguBtn ${guCode eq sigunguInfo.code ? 'active' : ''}"
+					data-sigungu="${sigunguInfo.code}">${sigunguInfo.name}</button>
 			</c:forEach>
 		</div>
 		
 		<!-- 데이터 로드 -->
 		<div class="article-list-slide">
 			<ul class="article-list list-unstyled row">
-				<c:forEach var="sigunguInfo" items="${allrestaurantData}">
-					<c:forEach var="rtritem" items="${sigunguInfo.restaurantData}">
-						<c:if
-							test="${not empty rtritem.firstimage || not empty rtritem.firstimage2}">
-							
-							<li class="article-item col-md-4 mb-4">
-								<div class="card h-100">
-									<div class="image-box">
-										<c:choose>
-											<c:when test="${not empty rtritem.firstimage}">
-												<img src="${rtritem.firstimage}" class="card-img-top"
-													alt="${rtritem.title}">
-											</c:when>
-											<c:otherwise>
-												<img src="${rtritem.firstimage2}" class="card-img-top"
-													alt="${rtritem.title}">
-											</c:otherwise>
-										</c:choose>
-									</div>
-									<div class="card-body">
-										<h5 class="card-title">${rtritem.title}</h5>
-										<p class="card-text">${rtritem.addr1}</p>
-										<a class="rtr btn-primary" data-contentid="${rtritem.contentid}">상세보기</a>
-									</div>
-								</div>
-							</li>
-							
-						</c:if>
-					</c:forEach>
+				<c:forEach var="rtritem" items="${restaurantData}">
+					<li class="article-item col-md-3 mb-3">
+						<div class="card h-100">
+							<div class="image-box">
+								<c:choose>
+									<c:when test="${not empty rtritem.firstimage}">
+										<img src="${rtritem.firstimage}" class="card-img-top"
+											alt="${rtritem.title}">
+									</c:when>
+									<c:otherwise>
+										<img src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" class="card-img-top"
+											alt="${rtritem.title}">
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">${rtritem.title}</h5>
+								<p class="card-text">${rtritem.addr1}</p>
+								<a class="rtr btn-primary" data-contentid="${rtritem.contentid}">상세보기</a>
+							</div>
+						</div>
+					</li>
 				</c:forEach>
 			</ul>
 		</div>
 	</div>
 
-	<div class="pagination">
-		<c:if test="${currentPage > 1}">
-			<a href="?pageNo=${currentPage - 1}&pageSize=${pageSize}"
-				class="btn btn-secondary">&laquo; Previous</a>
-		</c:if>
-		<span class="mx-2">Page ${currentPage}</span>
-		<c:if
-			test="${not empty allrestaurantData && allrestaurantData.size() == pageSize}">
-			<a href="?pageNo=${currentPage + 1}&pageSize=${pageSize}"
-				class="btn btn-secondary">Next &raquo;</a>
-		</c:if>
-	</div>
+	<nav aria-label="Page navigation example">
+	  <ul class="pagination justify-content-center">
+	  	<c:forEach var="pageNum" begin="1" end="${endPage}">
+		    <li class="page-item"><a class="page-link ${currentPage eq pageNum ? 'active' : '' }" href="/restaurant/area?guCode=${guCode}&pageNo=${pageNum}">${pageNum}</a></li>
+	    </c:forEach>
+	  </ul>
+	</nav>
 
 </main>
 
@@ -115,24 +103,7 @@ $(document).ready(function(){
         let pageNo = 1; // 페이지 번호를 정의합니다.
         let pageSize = 8; // 페이지 크기를 정의합니다.
 		
-		$.ajax({
-			type: 'GET',
-			url: `/restaurant/area/`+ selectedSigungu,
-			data: {
-                pageNo: pageNo,
-                pageSize: pageSize
-            },
-			dataType: 'json',
-			success: function(arr){
-				console.log(arr);
-				let items = showItemsByGuArr(arr);
-				$(".article-list").html(items);
-				updatePagination(selectedSigungu, pageNo, pageSize);
-			},
-			error: function(xhr, status, error){
-				console.error(error);
-			}
-		});
+        location.href="/restaurant/area?guCode=" + selectedSigungu;
 	});
 	
 

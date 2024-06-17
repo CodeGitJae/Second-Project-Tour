@@ -33,7 +33,7 @@
 	        	<c:choose>
 		        	<c:when test="${empty item.firstimage}">
 			            <li class="article-item">
-			            	<div class="items">
+			            	<div class="items" title="${item.title}">
 				                <div class="image-box">
 		                           <a class="getItem" href="/Seoul/showdetail?contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
 		                            <img class="img" src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
@@ -48,7 +48,7 @@
 		            </c:when>
 		            <c:otherwise>
 			             <li class="article-item">
-				            	<div class="items">
+				            	<div class="items" title="${item.title}">
 					                <div class="image-box">
 					                  <a class="getItem" href="/Seoul/showdetail?contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
 			                            <img class="img" src="${item.firstimage}" alt="${item.title}">
