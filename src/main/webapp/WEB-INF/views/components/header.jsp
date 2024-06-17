@@ -59,7 +59,7 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top align-items-center header-transparent">
-    <div id="google_translate_element" style="height: 40px;"></div>
+    <div id="google_translate_element" class="p-2 flex-end" style="height: 25px;"></div>
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
