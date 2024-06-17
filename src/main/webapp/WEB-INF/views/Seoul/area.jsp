@@ -18,17 +18,7 @@
 
     </div>
   </section><!-- End Our Services Section -->
-<!--  리모컨 생성 시작-->
-<div class="quickmenu">
-  <ul>
-    <li><a href="#">등급별혜택</a></li>
-    <li><a href="#">1:1문의</a></li>
-    <li><a href="#">후기</a></li>
-  </ul>
-</div>
-<!--  리모컨 끝-->
-
-<!-- 페이지 본문 시작 -->
+	
  <div class="container" style="height:800px">   
   	  <h1 class="showGu">서울 지역 관광 정보 [서울]</h1>
    <div class="citys">    <!--  서울 지역 포함한 전체 구 지역 버튼 생성 -->
@@ -45,12 +35,12 @@
 			            <li class="article-item">
 			            	<div class="items">
 				                <div class="image-box">
-		                           <a class="clickitem" href="/Seoul/showdetail?contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
-		                            <img src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
+		                           <a class="getItem" href="/Seoul/showdetail?contentId=${item.contentid}">  <!-- 클릭 시 상세보기로 이동 -->
+		                            <img class="img" src="${pageContext.request.contextPath}/assets/img/preparingforimage.png" alt="${item.title}">
 				                   </a>
 				                </div>
 				                <div class="text-box">
-				                    <h3>${item.title}</h3>
+				                    <h3 class="title">${item.title}</h3>
 				                    <p>${item.addr1}</p>
 				                </div>
 			                </div>
@@ -60,12 +50,12 @@
 			             <li class="article-item">
 				            	<div class="items">
 					                <div class="image-box">
-					                  <a class="clickitem" href="/Seoul/showdetail?contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
-			                            <img src="${item.firstimage}" alt="${item.title}">
+					                  <a class="getItem" href="/Seoul/showdetail?contentId=${item.contentid}"> <!-- 클릭 시 상세보기로 이동 -->
+			                            <img class="img" src="${item.firstimage}" alt="${item.title}">
 					                  </a>
 					                </div>
 					                <div class="text-box">
-					                    <h3>${item.title}</h3>
+					                    <h3 class="title">${item.title}</h3>
 					                    <p>${item.addr1}</p>
 					                </div>
 				                </div>
@@ -129,8 +119,13 @@
 	</div>
 	<!-- 서울 페이지 처리 끝) -->
 </div>
-<!--  본문 페이지 끝 class container end --> -->
 
+<div id="pastItemMenu">
+  <h2 class="pastMenu">최근에 본 게시물</h2>
+  <div class="showItemList">
+  </div>
+    <button class="clearBtn" onclick="deleteItemAll()">모두 지우기</button>
+</div>
 
 </main>
 
@@ -143,14 +138,6 @@
 <script>
 $(document).ready(function(){
 
-	// 리모컨 생성
-	var currentPosition = parseInt($(".quickmenu").css("top"));
-	  $(window).scroll(function() {
-	    var position = $(window).scrollTop(); 
-	    $(".quickmenu").stop().animate({"top":position+currentPosition+"px"},400);
-	  });
-	
-	// 시군구 버튼 클릭 시 선택된 도시 이름 가져오기
 	let siName = '';
 	
 	$(".sigunguBtn").click(function(){
