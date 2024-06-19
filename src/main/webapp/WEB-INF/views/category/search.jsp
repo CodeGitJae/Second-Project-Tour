@@ -70,51 +70,55 @@
 	        </c:forEach>
 		</ul>
 	</div>
+	<c:set var="startPage" value="${curPage -(curPage % 5 == 0 ? 4 : (curPage % 5 - 1))}"/>
+	<c:if test="${startPage < 1}">
+		<c:set var="startPage" value="1"/>
+	</c:if>
+	
+	<%-- 다음 페이지 계산 --%>
+	<fmt:parseNumber var="intermediateNextPage" value="${(curPage - 1) / 5}" integerOnly="true" />
+	<fmt:formatNumber var="nextPage" value="${intermediateNextPage * 5 + 6}" />
+	<c:if test="${nextPage > totalPages }">
+	 <c:set var="nextPage" value="${totalPages}"/>
+	</c:if>
+
+	<%-- 이전 페이지 계산 --%>
+	<fmt:parseNumber var="intermediatePrevPage" value="${(curPage - 1) / 5}" integerOnly="true" />
+	<fmt:formatNumber var="prevPage" value="${intermediatePrevPage * 5}" />
+	<c:if test="${prevPage == 0 }">
+	 <c:set var="prevPage" value="${startPage}"/>
+	</c:if>
+	
+  	<c:set var="endPage" value="${startPage + 4}" />
+    <c:if test="${endPage > totalPages}">
+        <c:set var="endPage" value="${totalPages}" />
+    </c:if>
+	
 	<div class="pagination">      <!-- 서울 지역 페이지 네이션 구현 / 지역벌 페이지는 ajax로 구현함-->
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
     		    <a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=1" aria-label="Previous">
 			      <span aria-hidden="true">&laquo;</span>
-		        </a>
-		    <c:choose>
-		    	<c:when test="${curPage - 5 < 1}">
-			      <li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=1">이전</a></li>
-		      	</c:when>
-		      	<c:otherwise>
-		      		<li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${curPage - 5}">이전</a></li>
-		      	</c:otherwise>
-	      	</c:choose>
+		        </a>		      		
 		    </li>
-		    <c:set var="startPage" value="${curPage - (curPage % 5 == 0 ? 4 : (curPage % 5 - 1))}" />
-		    	<c:if test="${startPage < 1}">
-                    <c:set var="startPage" value="1" />
-              	</c:if>
-	        <c:set var="endPage" value="${startPage + 4}" />
-	        
-	        <c:if test="${endPage > totalPages}">
-	            <c:set var="endPage" value="${totalPages}" />
-	        </c:if>
+		    <li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${prevPage}">이전</a></li>
 
 		    <c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
 				<li class="page-item ${pageNum == curPage ? 'active' : ''}">
 					<a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${pageNum}">${pageNum}</a>
 				</li>
 			</c:forEach>
-			<c:choose>
-				<c:when test="${curPage + 5 >= totalPages}">
-					<li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${totalPages}">다음</a></li>
-			    </c:when>
-			    <c:otherwise>
-			    	<li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${curPage + 5}">다음</a></li>
-			    </c:otherwise>
-	    	</c:choose>
+	
+	    	<li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${nextPage}">다음</a></li>
+
     	   	 <li class="page-item">
 		      <a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${totalPages}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
 		    </li>
 		  </ul>
+		  
 		</nav>
 	</div>
 </div>

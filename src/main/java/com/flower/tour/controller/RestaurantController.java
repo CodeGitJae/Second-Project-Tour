@@ -35,7 +35,12 @@ public class RestaurantController {
 		List<Map<String, Object>> restaurantData = rtrService.getRestaurantData(1, "서울", 39, 8, pageNo, guCode);
 		
 		String totalCount = (String) restaurantData.get(restaurantData.size()-1).get("totalCount");
-		int endPage = Integer.parseInt(totalCount) / 8 + 1;
+		int endPage = Integer.parseInt(totalCount) / 8;
+		
+		if(Integer.parseInt(totalCount) % 8 != 0)
+			endPage += 1;
+		
+//		System.out.println(totalCount);
 		restaurantData.remove(restaurantData.size()-1);
 		
 		model.addAttribute("restaurantData", restaurantData);
@@ -55,7 +60,7 @@ public class RestaurantController {
 	public List<Map<String, Object>> getRestaurantDataBySigungu(@PathVariable("selectedSigungu") int sigunguCode,
 			@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "8") int pageSize)
 			throws URISyntaxException, JsonProcessingException {
-		System.out.println(sigunguCode);
+//		System.out.println(sigunguCode);
 
 		// 해당 지역 코드를 기반으로 해당 지역의 음식점 정보 조회
 		List<Map<String, Object>> restaurantData = rtrService.getRestaurantData(1, "서울", 39, 20, 1, sigunguCode);
@@ -76,8 +81,8 @@ public class RestaurantController {
 			throws URISyntaxException, JsonProcessingException {
 
 		List<Map<String, Object>> restaurantInfoList = rtrService.restaurantInfo(contentid);
-		System.out.println(contentid);
-		System.out.println(":::::::::restaurantInfoList:::::::::" + restaurantInfoList);
+//		System.out.println(contentid);
+//		System.out.println(":::::::::restaurantInfoList:::::::::" + restaurantInfoList);
 		model.addAttribute("detailData", restaurantInfoList);
 
 		return "/restaurant/restaurant_detail";

@@ -24,7 +24,8 @@ public class SeoulTourService {
 	private String serviceKey;
 	
 	// 관광지 contentId 값에 따라 공통 정보 가져오기
-	public List<Map<String, Object>> getDetailCommonByContentid (int contentTypeId, int contentId) throws JsonMappingException, JsonProcessingException, URISyntaxException{
+	public List<Map<String, Object>> getDetailCommonByContentid (int contentTypeId, int contentId) 
+			throws JsonMappingException, JsonProcessingException, URISyntaxException{
 		String link = "https://apis.data.go.kr/B551011/KorService1/detailCommon1";
 		String MobileOS = "ETC";
 		String MobileApp = "TEST";
@@ -194,7 +195,7 @@ public class SeoulTourService {
 			url += "&sigunguCode=" + sigunguCode;
 		
 		URI uri = new URI(url);
-		
+//		System.out.println(uri);
 		RestTemplate restTemplate = new RestTemplate();
 //		HttpHeaders headers = new HttpHeaders();
 //		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");

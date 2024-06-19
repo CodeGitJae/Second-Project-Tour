@@ -39,11 +39,11 @@
 				</select>
 			</div>
 
-			<div class="btn_box">
+<!-- 			<div class="btn_box">
 				<button class="btn green rounded" id="btnReset">
 					<span>초기화</span>
 				</button>
-			</div>
+			</div> -->
 		</div>
 
 		<!-- 데이터 로드 -->
