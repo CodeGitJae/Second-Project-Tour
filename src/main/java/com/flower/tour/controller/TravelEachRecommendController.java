@@ -51,7 +51,7 @@ public class TravelEachRecommendController {
 	    // 서비스에서 호출한 API 메서드 사용
 		List<Map<String, Object>> searchKeyword = terService.getSerachKeyword(keyword, contentTypeId, numOfRows, page);
 //		System.out.println("data= "+ recommendTour);		
-		System.out.println("data= "+ searchKeyword);
+//		System.out.println("data= "+ searchKeyword);
 		
 		// 전체 페이지 수 문자열 정수로 parsing 
     	int totalCount = Integer.parseInt(searchKeyword.get(searchKeyword.size() - 1).get("totalCount").toString());

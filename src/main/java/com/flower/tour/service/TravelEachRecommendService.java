@@ -45,7 +45,7 @@ public class TravelEachRecommendService {
 		    "&serviceKey=" + serviceKey;
 		
 		URI uri = new URI(url);
-		System.out.println(uri);
+//		System.out.println(uri);
 		RestTemplate restTemplate = new RestTemplate();
 		String response = restTemplate.getForObject(uri, String.class);
 		
