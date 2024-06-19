@@ -113,7 +113,7 @@
 	    	<li class="page-item"><a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${nextPage}">다음</a></li>
 
     	   	 <li class="page-item">
-		      <a class="page-link" href="/Seoul/area?page=${totalPages}" aria-label="Next">
+		      <a class="page-link" href="/category/search?search=${keyword}&contentTypeId=${searchKeyword[0].contenttypeid}&page=${totalPages}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
 		    </li>

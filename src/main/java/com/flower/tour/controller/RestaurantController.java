@@ -81,8 +81,8 @@ public class RestaurantController {
 			throws URISyntaxException, JsonProcessingException {
 
 		List<Map<String, Object>> restaurantInfoList = rtrService.restaurantInfo(contentid);
-		System.out.println(contentid);
-		System.out.println(":::::::::restaurantInfoList:::::::::" + restaurantInfoList);
+//		System.out.println(contentid);
+//		System.out.println(":::::::::restaurantInfoList:::::::::" + restaurantInfoList);
 		model.addAttribute("detailData", restaurantInfoList);
 
 		return "/restaurant/restaurant_detail";
