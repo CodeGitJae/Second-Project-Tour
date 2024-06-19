@@ -66,12 +66,39 @@
 			</ul>
 		</div>
 	</div>
+	<c:set var="startPage" value="${currentPage -(currentPage % 5 == 0 ? 4 : (currentPage % 5 - 1))}"/>
+	<c:if test="${startPage < 1}">
+		<c:set var="startPage" value="1"/>
+	</c:if>
+	
+	
+	<%-- 다음 페이지 계산 --%>
+	<fmt:parseNumber var="intermediateNextPage" value="${(currentPage - 1) / 5}" integerOnly="true" />
+	<fmt:formatNumber var="nextPage" value="${intermediateNextPage * 5 + 6}" />
+	<c:if test="${nextPage > endPage }">
+	 <c:set var="nextPage" value="${endPage}"/>
+	</c:if>
+
+	<%-- 이전 페이지 계산 --%>
+	<fmt:parseNumber var="intermediatePrevPage" value="${(currentPage - 1) / 5}" integerOnly="true" />
+	<fmt:formatNumber var="prevPage" value="${intermediatePrevPage * 5}" />
+	<c:if test="${prevPage == 0 }">
+	 <c:set var="prevPage" value="${startPage}"/>
+	</c:if>
+
+
+	<c:set var="numOfPage" value="${startPage + 4}"/>
+	<c:if test="${startPage == 311}">
+		<c:set var="numOfPage" value="${startPage + 2}"/>
+	</c:if>
 
 	<nav aria-label="Page navigation example">
 	  <ul class="pagination justify-content-center">
-	  	<c:forEach var="pageNum" begin="1" end="${endPage}">
-		    <li class="page-item"><a class="page-link ${currentPage eq pageNum ? 'active' : '' }" href="/restaurant/area?guCode=${guCode}&pageNo=${pageNum}">${pageNum}</a></li>
-	    </c:forEach>
+	  	<li class="page-item"><a class="page-link" href="/restaurant/area?guCode=0&pageNo=${prevPage}">Previous</a></li>
+		  	<c:forEach var="pageNum" begin="${startPage}" end="${numOfPage}">
+			    <li class="page-item"><a class="page-link ${currentPage eq pageNum ? 'active' : '' }" href="/restaurant/area?guCode=${guCode}&pageNo=${pageNum}">${pageNum}</a></li>
+		    </c:forEach>
+	    <li class="page-item"><a class="page-link" href="/restaurant/area?guCode=0&pageNo=${nextPage}">Next</a></li>
 	  </ul>
 	</nav>
 

@@ -48,7 +48,7 @@ public class FestivalController {
 
 		int totalCount = Integer.parseInt(festivalList.get(festivalList.size() - 1).get("totalCount").toString());
 		int pages = (int) Math.ceil((double) totalCount / 12);
-		System.out.println(pages);
+//		System.out.println(pages);
 
 		festivalList.remove(festivalList.size() - 1);
 		
@@ -94,8 +94,8 @@ public class FestivalController {
 			throws URISyntaxException, JsonProcessingException {
 
 		List<Map<String, Object>> festivalInfoList = ftvService.festivalInfo(1, 1, contentid);
-		System.out.println(contentid);
-		System.out.println(":::::::::::::::" + festivalInfoList);
+//		System.out.println(contentid);
+//		System.out.println(":::::::::::::::" + festivalInfoList);
 		model.addAttribute("ftvInfoList", festivalInfoList);
 
 		return "/festival/festival_detail";

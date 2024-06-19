@@ -34,7 +34,7 @@ public class MainService {
 				"&mapY=" + mapY + 
 				"&radius=" + radius + "&listYN=Y&_type=json&contentTypeId=12";
 		
-		System.out.println(url);
+//		System.out.println(url);
 		
 		URI uri = new URI(url);
 		
@@ -43,7 +43,7 @@ public class MainService {
         String response = restTemplate.getForObject(uri, String.class);
 
         // 응답을 출력
-        System.out.println("Response: " + response);
+//        System.out.println("Response: " + response);
         
         List<Map<String, Object>> result = parseLocationBasedList(response);
 

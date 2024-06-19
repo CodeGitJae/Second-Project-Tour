@@ -37,7 +37,7 @@ public class FestivalService {
 				+ eventstartdate + "&areaCode=" + areaCode + "&serviceKey=" + serviceKey;
 
 		URI uri = new URI(url);
-		System.out.println(uri);
+//		System.out.println(uri);
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -86,7 +86,7 @@ public class FestivalService {
 		map.put("totalCount", body.path("totalCount").asText());
 
 		result.add(map);
-		System.out.println("result"+result);
+//		System.out.println("result"+result);
 		
 		return result;
 	}
@@ -109,12 +109,12 @@ public class FestivalService {
 				+ "&serviceKey=" + serviceKey;
 
 		URI uri = new URI(url);
-		System.out.println(uri);
+//		System.out.println(uri);
 
 		RestTemplate restTemplate = new RestTemplate();
 
 		String response = restTemplate.getForObject(uri, String.class);
-		System.out.println(":::::::::::::::::::response" + response);
+//		System.out.println(":::::::::::::::::::response" + response);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -122,7 +122,7 @@ public class FestivalService {
 
 		JsonNode root = objectMapper.readTree(response);
 		JsonNode items = root.path("response").path("body").path("items").path("item");
-		System.out.println(items);
+//		System.out.println(items);
 
 		if (items.isArray()) {
 			for (JsonNode item : items) {
@@ -175,12 +175,12 @@ public class FestivalService {
 			}
 			
 			
-			System.out.println(":::::::::::::::filterMonthList" + filterMonthList);
+//			System.out.println(":::::::::::::::filterMonthList" + filterMonthList);
 		}
 		
 		List<Map<String, Object>> r = new ArrayList<>();
-		System.out.println("============"+filterMonthList.size());
-		System.out.println("============"+page);
+//		System.out.println("============"+filterMonthList.size());
+//		System.out.println("============"+page);
 		
 		for(int i=(page-1)*12; i<filterMonthList.size(); i++) {
 			try {
